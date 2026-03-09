@@ -3,11 +3,15 @@ import model.SmartHome;
 import model.devices.*;
 
 public class Main {
-    static void main() {
+    static void main(String[] args) {
         SmartLights livingRoomLight = new SmartLights("Warm White", "Philips Hue");
         livingRoomLight.setId(1);
         livingRoomLight.setName("Living Room Light");
         livingRoomLight.setBrightness("80%");
+
+        SmartTV livingRoomTV = new SmartTV("Samsung", 55);
+        livingRoomTV.setId(9);
+        livingRoomTV.setName("Living Room TV");
 
         Thermostat thermostat = new Thermostat(22.0);
         thermostat.setId(2);
@@ -45,7 +49,7 @@ public class Main {
         kitchenLight.setBrightness("100%");
 
 
-        Device[] livingRoomDevices = {livingRoomLight, thermostat, frontDoorCam, livingRoomSpeaker};
+        Device[] livingRoomDevices = {livingRoomLight, thermostat, frontDoorCam, livingRoomSpeaker, livingRoomTV};
         Device[] hallwayDevices = {hallwaySensor, mainDoorLock};
         Device[] kitchenDevices = {kitchenLight, coffeePlug};
 
@@ -58,7 +62,7 @@ public class Main {
         Room[] homeRooms = {livingRoom, hallway, kitchen};
         SmartHome myHome = new SmartHome("123 Main Street", homeRooms , "My Smart Home");
 
-        
+
         System.out.println(myHome.listEverything());
 
         System.out.println(livingRoomLight.turnOn());
@@ -77,5 +81,10 @@ public class Main {
         System.out.println(livingRoomSpeaker.turnDownVol());
 
         System.out.println(thermostat.setTheTemp());
+
+        System.out.println(livingRoomTV.turnOn());
+        System.out.println(livingRoomTV.turnOff());
+
+        System.out.println("Total smart homes created: " + SmartHome.getTotalHomes());
     }
 }

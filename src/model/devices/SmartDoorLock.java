@@ -4,17 +4,12 @@ public class SmartDoorLock extends Device {
     private String lockModel;
     private String lockState;
 
-    public SmartDoorLock(String lockModel){
+    public SmartDoorLock(String lockModel) {
         this.lockModel = lockModel;
     }
 
-    public String getLockState() {
-        return lockState;
-    }
-
-    public void setLockState(String lockState) {
-        this.lockState = lockState;
-    }
+    public String getLockState() { return lockState; }
+    public void setLockState(String lockState) { this.lockState = lockState; }
 
     @Override
     public String deviceInfo() {
@@ -22,10 +17,12 @@ public class SmartDoorLock extends Device {
     }
 
     public String lock() {
+        lockState = "Locked";
         return "Locked! the state of the lock is " + lockState;
     }
 
     public String unlock() {
+        lockState = "Unlocked";
         return "Unlocked! the state of the lock is " + lockState;
     }
 }

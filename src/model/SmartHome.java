@@ -7,23 +7,30 @@ public class SmartHome {
     private String address;
     private Room[] rooms;
 
-    public SmartHome(String address,  Room[] rooms,  String name) {
+    private static int totalHomes = 0;
+    private static final String VERSION = "1.0";
+
+    static {
+        System.out.println("SmartHome system initialized. Version: " + VERSION);
+    }
+
+    public static int getTotalHomes() {
+        return totalHomes;
+    }
+
+    public SmartHome(String address, Room[] rooms, String name) {
         this.address = address;
         this.rooms = rooms;
         this.name = name;
+        totalHomes++;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
     public String listEverything() {
         if (rooms == null || rooms.length == 0) {
-            return "the house isnt built yet";
+            return "the house isn't built yet";
         }
         String result = "Devices in " + name + ": ";
         for (int index = 0; index < rooms.length; index++) {
