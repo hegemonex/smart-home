@@ -3,7 +3,7 @@ import model.SmartHome;
 import model.devices.*;
 
 public class Main {
-    static void main() {
+    public static void main(String[] args) {
         SmartLights livingRoomLight = new SmartLights("Warm White", "Philips Hue");
         livingRoomLight.setId(1);
         livingRoomLight.setName("Living Room Light");
