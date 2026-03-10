@@ -1,6 +1,5 @@
-import model.Room;
-import model.SmartHome;
 import model.devices.*;
+import model.service.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -8,7 +7,47 @@ import java.time.LocalDate;
 public class Main {
 
     public static void main(String[] args) {
-        // Living Room devices
+        // --- Owner ---
+        Owner owner = new Owner(
+                "John Smith", "john@example.com", "+1-555-9999",
+                LocalDate.of(2022, 5, 1)
+        );
+
+        // --- Neighbourhood ---
+        Neighbourhood neighbourhood = new Neighbourhood(
+                "Maple Grove", "Springfield", 120, true
+        );
+
+        // --- Network Provider ---
+        NetworkProvider networkProvider = new NetworkProvider(
+                "SpeedNet ISP", new BigDecimal("59.99"), 500, "Fiber"
+        );
+
+        // --- Security Company ---
+        SecurityCompany securityCompany = new SecurityCompany(
+                "ShieldGuard Security", "+1-555-0911", new BigDecimal("39.99"), true
+        );
+
+        // --- Solar Panel ---
+        SolarPanel solarPanel = new SolarPanel(
+                "SunPower", new BigDecimal("8.50"), 12, LocalDate.of(2022, 7, 15)
+        );
+
+        // --- Sewage System ---
+        SewageSystem sewerageSystem = new SewageSystem(
+                "City Sewerage Co.", true, LocalDate.of(2024, 9, 10), "PVC"
+        );
+
+        // --- Garage ---
+        Garage garage = new Garage(2, true, new BigDecimal("45.00"), true);
+
+        // --- Garden ---
+        Garden garden = new Garden(new BigDecimal("120.00"), "English", true, 8);
+
+        // --- Home Gym ---
+        HomeGym homeGym = new HomeGym(new BigDecimal("30.00"), 10, true, "Rubber");
+
+        // --- Living Room devices ---
         SmartLight livingRoomLight = new SmartLight(
                 "Living Room Light", new BigDecimal("49.99"), LocalDate.of(2024, 3, 10),
                 "Warm White", "Philips Hue", 80
@@ -30,7 +69,7 @@ public class Main {
                 "Cool", 21.0, 3
         );
 
-        // Hallway devices
+        // --- Hallway devices ---
         MotionSensor hallwaySensor = new MotionSensor(
                 "Hallway Motion Sensor", new BigDecimal("39.99"), LocalDate.of(2024, 2, 14),
                 7, 10
@@ -44,7 +83,7 @@ public class Main {
                 "4K", "Infrared"
         );
 
-        // Kitchen devices
+        // --- Kitchen devices ---
         SmartLight kitchenLight = new SmartLight(
                 "Kitchen Light", new BigDecimal("34.99"), LocalDate.of(2024, 3, 10),
                 "Cool White", "Ikea Tradfri", 100
@@ -54,13 +93,13 @@ public class Main {
                 "Coffee Machine", new BigDecimal("1200.00")
         );
 
-        // Office devices
+        // --- Office devices ---
         SmartRouter officeRouter = new SmartRouter(
                 "Office Router", new BigDecimal("189.99"), LocalDate.of(2023, 10, 10),
                 "MySmartHome_5G", 12, 2.4
         );
 
-        // Assemble rooms
+        // --- Rooms ---
         Device[] livingRoomDevices = {livingRoomLight, livingRoomTV, livingRoomSpeaker, livingRoomThermostat, livingRoomAC};
         Device[] hallwayDevices = {hallwaySensor, mainDoorLock, frontDoorCamera};
         Device[] kitchenDevices = {kitchenLight, coffeeMachinePlug};
@@ -71,61 +110,56 @@ public class Main {
         Room kitchen = new Room("Kitchen", 1, kitchenDevices);
         Room office = new Room("Office", 2, officeDevices);
 
-        Room[] homeRooms = {livingRoom, hallway, kitchen, office};
-
-        // Root object - fully populated
+        // --- Root object: SmartHome fully populated ---
         SmartHome myHome = new SmartHome(
                 "My Smart Home",
-                "123 Main Street",
                 LocalDate.of(2023, 6, 1),
-                homeRooms
+                owner,
+                neighbourhood,
+                networkProvider,
+                securityCompany,
+                solarPanel,
+                sewerageSystem,
+                garage,
+                garden,
+                homeGym,
+                new Room[]{livingRoom, hallway, kitchen, office}
         );
 
-        // Print full hierarchy
+        // --- Output ---
         System.out.println(myHome.listAllDevices());
+        System.out.println(myHome.getOwner().ownerInfo());
+        System.out.println(myHome.getNeighbourhood().neighbourhoodInfo());
+        System.out.println(myHome.getNetworkProvider().networkInfo());
+        System.out.println(myHome.getSecurityCompany().securityInfo());
+        System.out.println(myHome.getSolarPanel().solarInfo());
+        System.out.println(myHome.getSewageSystem().sewageInfo());
+        System.out.println(myHome.getGarage().garageInfo());
+        System.out.println(myHome.getGarden().gardenInfo());
+        System.out.println(myHome.getHomeGym().gymInfo());
 
-        // SmartLight
         System.out.println(livingRoomLight.turnOn());
         System.out.println(kitchenLight.turnOff());
-
-        // SmartTV
         System.out.println(livingRoomTV.turnOn());
         System.out.println(livingRoomTV.turnOff());
-
-        // SmartSpeaker
         System.out.println(livingRoomSpeaker.turnUpVol());
         System.out.println(livingRoomSpeaker.turnDownVol());
-
-        // Thermostat
         System.out.println(livingRoomThermostat.adjustTemp());
-
-        // SmartAirConditioner
         System.out.println(livingRoomAC.turnOn());
         System.out.println(livingRoomAC.changeMode("Heat"));
-
-        // MotionSensor
         hallwaySensor.setMotionDetected(true);
         System.out.println(hallwaySensor.detectMotion());
-
-        // SmartDoorLock
         System.out.println(mainDoorLock.lock());
         System.out.println(mainDoorLock.unlock());
-
-        // SecurityCamera
         frontDoorCamera.setRecording(true);
         System.out.println(frontDoorCamera.recordingStatus());
         System.out.println(frontDoorCamera.logMotion());
-
-        // SmartPlug
         System.out.println(coffeeMachinePlug.turnOn());
         System.out.println(coffeeMachinePlug.showPowerUsage());
-
-        // SmartRouter
         System.out.println(officeRouter.showNetworkStatus());
         System.out.println(officeRouter.reboot());
 
-        // Stats
-        System.out.println("Total smart homes created: " + SmartHome.getTotalHomes());
+        System.out.println("Total smart homes: " + SmartHome.getTotalHomes());
         System.out.println("Total devices created: " + Device.getDeviceCount());
     }
 }
