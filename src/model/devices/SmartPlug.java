@@ -1,11 +1,20 @@
 package model.devices;
 
-public class SmartPlug extends Device {
-    private String connectedDevice;
-    private Double powerConsumption;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
-    public SmartPlug(Double powerConsumption) {
-        this.powerConsumption = powerConsumption;
+public class SmartPlug extends Device {
+
+    private String connectedDevice;
+    private BigDecimal maxWattage;
+    private boolean active;
+
+    public SmartPlug(String name, BigDecimal price, LocalDate installedDate,
+                     String connectedDevice, BigDecimal maxWattage) {
+        super(name, price, installedDate);
+        this.connectedDevice = connectedDevice;
+        this.maxWattage = maxWattage;
+        this.active = false;
     }
 
     public String getConnectedDevice() {
@@ -16,15 +25,38 @@ public class SmartPlug extends Device {
         this.connectedDevice = connectedDevice;
     }
 
+    public BigDecimal getMaxWattage() {
+        return maxWattage;
+    }
+
+    public void setMaxWattage(BigDecimal maxWattage) {
+        this.maxWattage = maxWattage;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    @Override
+    public String deviceInfo() {
+        return super.deviceInfo() + " | Connected: " + connectedDevice + ", Max Wattage: " + maxWattage + "W";
+    }
+
     public String turnOn() {
+        active = true;
         return connectedDevice + " is now ON.";
     }
 
     public String turnOff() {
+        active = false;
         return connectedDevice + " is now OFF.";
     }
 
     public String showPowerUsage() {
-        return connectedDevice + " is using " + powerConsumption + "W";
+        return connectedDevice + " is drawing up to " + maxWattage + "W.";
     }
 }

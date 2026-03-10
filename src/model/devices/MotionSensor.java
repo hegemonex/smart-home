@@ -1,16 +1,28 @@
 package model.devices;
 
-public class MotionSensor extends Device {
-    private int sensetivity;
-    private boolean motionDetected;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
-    public MotionSensor(int sensetivity) {
-        this.sensetivity = sensetivity;
+public class MotionSensor extends Device {
+
+    private int sensitivity;
+    private boolean motionDetected;
+    private int detectionRangeMeters;
+
+    public MotionSensor(String name, BigDecimal price, LocalDate installedDate,
+                        int sensitivity, int detectionRangeMeters) {
+        super(name, price, installedDate);
+        this.sensitivity = sensitivity;
+        this.detectionRangeMeters = detectionRangeMeters;
+        this.motionDetected = false;
     }
 
-    @Override
-    public String deviceInfo() {
-        return super.deviceInfo() + " its sensetivity is " + sensetivity;
+    public int getSensitivity() {
+        return sensitivity;
+    }
+
+    public void setSensitivity(int sensitivity) {
+        this.sensitivity = sensitivity;
     }
 
     public boolean isMotionDetected() {
@@ -21,11 +33,24 @@ public class MotionSensor extends Device {
         this.motionDetected = motionDetected;
     }
 
+    public int getDetectionRangeMeters() {
+        return detectionRangeMeters;
+    }
+
+    public void setDetectionRangeMeters(int detectionRangeMeters) {
+        this.detectionRangeMeters = detectionRangeMeters;
+    }
+
+    @Override
+    public String deviceInfo() {
+        return super.deviceInfo() + " | Sensitivity: " + sensitivity + ", Range: " + detectionRangeMeters + "m";
+    }
+
     public String detectMotion() {
         if (motionDetected) {
-            return "Motion detected! Alert!";
+            return getName() + ": Motion detected! Alert!";
         } else {
-            return "No motion detected.";
+            return getName() + ": No motion detected.";
         }
     }
 }

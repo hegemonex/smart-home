@@ -1,28 +1,48 @@
 package model.devices;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
 public class SmartTV extends Device {
+
     private String brand;
     private int screenSize;
     private boolean isOn;
 
-    public SmartTV(String brand, int screenSize) {
+    public SmartTV(String name, BigDecimal price, LocalDate installedDate, String brand, int screenSize) {
+        super(name, price, installedDate);
         this.brand = brand;
+        this.screenSize = screenSize;
+        this.isOn = false;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public int getScreenSize() {
+        return screenSize;
+    }
+
+    public void setScreenSize(int screenSize) {
         this.screenSize = screenSize;
     }
 
-    public String getBrand() { return brand; }
-    public void setBrand(String brand) { this.brand = brand; }
+    public boolean isOn() {
+        return isOn;
+    }
 
-    public int getScreenSize() { return screenSize; }
-    public void setScreenSize(int screenSize) { this.screenSize = screenSize; }
-
-    public boolean isOn() { return isOn; }
-    public void setOn(boolean on) { isOn = on; }
+    public void setOn(boolean on) {
+        isOn = on;
+    }
 
     @Override
     public String deviceInfo() {
-        return super.deviceInfo() + " it is a " + screenSize
-                + " inch " + brand + " TV";
+        return super.deviceInfo() + " | Brand: " + brand + ", Screen: " + screenSize + " inches";
     }
 
     public String turnOn() {

@@ -3,35 +3,51 @@ package model;
 import model.devices.Device;
 
 public class Room {
-    private String room;
+
+    private String name;
     private int floor;
-    private Device[] device;
+    private Device[] devices;
 
-    public Room(int floor, Device[] device,  String room) {
+    public Room(String name, int floor, Device[] devices) {
+        this.name = name;
         this.floor = floor;
-        this.device = device;
-        this.room = room;
+        this.devices = devices;
     }
 
-    public Device[] getDevice() {
-        return device;
+    public String getName() {
+        return name;
     }
 
-    public String getRoom() {
-        return room;
-    }
-    public void setRoom(String room) {
-        this.room = room;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String listDevices(){
-        if(device==null || device.length==0){
-            return "there are no devices";
+    public int getFloor() {
+        return floor;
+    }
+
+    public void setFloor(int floor) {
+        this.floor = floor;
+    }
+
+    public Device[] getDevices() {
+        return devices;
+    }
+
+    public void setDevices(Device[] devices) {
+        this.devices = devices;
+    }
+
+    public String listDevices() {
+        if (devices == null || devices.length == 0) {
+            return name + " has no devices.";
         }
-        String result = "Devices in " + room + ": ";
-        for (int i = 0; i < device.length; i++) {
-            result += device[i].getName();
-            if (i != device.length - 1) result += ", ";
+        String result = "Devices in " + name + " (floor " + floor + "): ";
+        for (int i = 0; i < devices.length; i++) {
+            result += devices[i].getName();
+            if (i < devices.length - 1) {
+                result += ", ";
+            }
         }
         return result;
     }

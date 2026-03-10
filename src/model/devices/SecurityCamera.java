@@ -1,19 +1,38 @@
 package model.devices;
 
-public class SecurityCamera extends Device {
-    private String resolution;
-    private String sensor;
-    private boolean recording;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-    public SecurityCamera(String resolution, String sensor) {
+public class SecurityCamera extends Device {
+
+    private String resolution;
+    private String sensorType;
+    private boolean recording;
+    private LocalDateTime lastMotionDetected;
+
+    public SecurityCamera(String name, BigDecimal price, LocalDate installedDate,
+                          String resolution, String sensorType) {
+        super(name, price, installedDate);
         this.resolution = resolution;
-        this.sensor = sensor;
+        this.sensorType = sensorType;
+        this.recording = false;
     }
 
-    @Override
-    public String deviceInfo() {
-        return super.deviceInfo() + " it has a " + resolution
-                + " resolution and a " + sensor + " sensor";
+    public String getResolution() {
+        return resolution;
+    }
+
+    public void setResolution(String resolution) {
+        this.resolution = resolution;
+    }
+
+    public String getSensorType() {
+        return sensorType;
+    }
+
+    public void setSensorType(String sensorType) {
+        this.sensorType = sensorType;
     }
 
     public boolean isRecording() {
@@ -24,11 +43,29 @@ public class SecurityCamera extends Device {
         this.recording = recording;
     }
 
-    public String recording() {
-        if (isRecording()) {
-            return "Currently being recorded";
+    public LocalDateTime getLastMotionDetected() {
+        return lastMotionDetected;
+    }
+
+    public void setLastMotionDetected(LocalDateTime lastMotionDetected) {
+        this.lastMotionDetected = lastMotionDetected;
+    }
+
+    @Override
+    public String deviceInfo() {
+        return super.deviceInfo() + " | Resolution: " + resolution + ", Sensor: " + sensorType;
+    }
+
+    public String recordingStatus() {
+        if (recording) {
+            return getName() + " is currently recording.";
         } else {
-            return "currently not being recorded";
+            return getName() + " is not recording.";
         }
+    }
+
+    public String logMotion() {
+        lastMotionDetected = LocalDateTime.now();
+        return getName() + " detected motion at " + lastMotionDetected;
     }
 }
