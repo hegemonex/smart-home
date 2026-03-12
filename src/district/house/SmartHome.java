@@ -1,7 +1,6 @@
 package district.house;
 
 import district.*;
-import model.District.*;
 
 import java.time.LocalDate;
 
