@@ -1,15 +1,15 @@
-package model.service;
+package district;
 
 import java.time.LocalDate;
 
-public class SewageSystem {
+public class SewerageSystem {
 
     private String provider;
     private boolean connected;
     private LocalDate lastInspected;
     private String pipeType;
 
-    public SewageSystem(String provider, boolean connected, LocalDate lastInspected, String pipeType) {
+    public SewerageSystem(String provider, boolean connected, LocalDate lastInspected, String pipeType) {
         this.provider = provider;
         this.connected = connected;
         this.lastInspected = lastInspected;
@@ -48,8 +48,8 @@ public class SewageSystem {
         this.pipeType = pipeType;
     }
 
-    public String sewageInfo() {
-        return "Sewage | Provider: " + provider + " | Connected: " + connected
-                + " | Pipe Type: " + pipeType + " | Last Inspected: " + lastInspected;
+    public String sewerageInfo() {
+        return "Sewerage | Provider: " + provider + " | Connected: " + connected
+                + " | Pipe: " + pipeType + " | Last Inspected: " + lastInspected;
     }
 }

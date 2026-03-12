@@ -1,4 +1,4 @@
-package model.service;
+package district;
 
 public class Neighbourhood {
 
