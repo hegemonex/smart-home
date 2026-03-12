@@ -138,26 +138,6 @@ public class Main {
         System.out.println(myHome.getGarden().gardenInfo());
         System.out.println(myHome.getHomeGym().gymInfo());
 
-        System.out.println(livingRoomLight.turnOn());
-        System.out.println(kitchenLight.turnOff());
-        System.out.println(livingRoomTV.turnOn());
-        System.out.println(livingRoomTV.turnOff());
-        System.out.println(livingRoomSpeaker.turnUpVol());
-        System.out.println(livingRoomSpeaker.turnDownVol());
-        System.out.println(livingRoomThermostat.adjustTemp());
-        System.out.println(livingRoomAC.turnOn());
-        System.out.println(livingRoomAC.changeMode("Heat"));
-        hallwaySensor.setMotionDetected(true);
-        System.out.println(hallwaySensor.detectMotion());
-        System.out.println(mainDoorLock.lock());
-        System.out.println(mainDoorLock.unlock());
-        frontDoorCamera.setRecording(true);
-        System.out.println(frontDoorCamera.recordingStatus());
-        System.out.println(frontDoorCamera.logMotion());
-        System.out.println(coffeeMachinePlug.turnOn());
-        System.out.println(coffeeMachinePlug.showPowerUsage());
-        System.out.println(officeRouter.showNetworkStatus());
-        System.out.println(officeRouter.reboot());
 
         System.out.println("Total smart homes: " + SmartHome.getTotalHomes());
         System.out.println("Total devices created: " + Device.getDeviceCount());
