@@ -1,4 +1,4 @@
-package model.devices;
+package district.house.devices;
 
 
 import java.math.BigDecimal;
