@@ -1,6 +1,10 @@
 package district.house;
 
 import district.*;
+import district.house.rooms.Floor;
+import district.house.rooms.Garage;
+import district.house.rooms.Garden;
+import district.house.rooms.HomeGym;
 
 import java.time.LocalDate;
 

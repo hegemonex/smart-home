@@ -1,16 +1,18 @@
-package district.house.devices;
+package district.house.devices.climateDevice;
+import district.house.devices.Device;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class SmartAirConditioner extends Device {
+public class SmartAirConditioner extends ClimateDevice {
 
     private String mode;
     private double temperature;
     private int fanSpeed;
 
     public SmartAirConditioner(String name, BigDecimal price, LocalDate installedDate,
-                               String mode, double temperature, int fanSpeed) {
-        super(name, price, installedDate);
+                               String mode, double temperature, int fanSpeed, Double temperatureSetting) {
+        super(name, price, installedDate, temperatureSetting);
         this.mode = mode;
         this.temperature = temperature;
         this.fanSpeed = fanSpeed;
@@ -57,4 +59,10 @@ public class SmartAirConditioner extends Device {
         this.mode = newMode;
         return getName() + " AC mode changed to " + mode;
     }
+
+    @Override
+    public void operate() {
+        System.out.println(name + " is balancing the temperature.");
+    }
+
 }

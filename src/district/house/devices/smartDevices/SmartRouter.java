@@ -1,18 +1,20 @@
-package district.house.devices;
+package district.house.devices.smartDevices;
 
+
+import district.house.devices.Device;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class SmartRouter extends Device {
+public class SmartRouter extends SmartDevice {
 
     private String ssid;
     private int connectedDevicesCount;
     private double bandwidthGbps;
 
     public SmartRouter(String name, BigDecimal price, LocalDate installedDate,
-                       String ssid, int connectedDevicesCount, double bandwidthGbps) {
-        super(name, price, installedDate);
+                       String ssid, int connectedDevicesCount, double bandwidthGbps, boolean connected) {
+        super(name, price, installedDate, connected);
         this.ssid = ssid;
         this.connectedDevicesCount = connectedDevicesCount;
         this.bandwidthGbps = bandwidthGbps;
@@ -55,4 +57,10 @@ public class SmartRouter extends Device {
     public String reboot() {
         return getName() + " is rebooting... Network will resume shortly.";
     }
+
+    @Override
+    public void operate() {
+        System.out.println(name + " is routering");
+    }
+
 }

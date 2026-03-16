@@ -1,4 +1,4 @@
-package district.house;
+package district.house.rooms;
 
 public class Floor {
 

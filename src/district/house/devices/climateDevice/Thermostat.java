@@ -1,15 +1,17 @@
-package district.house.devices;
+package district.house.devices.climateDevice;
+
+import district.house.devices.Device;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class Thermostat extends Device {
+public class Thermostat extends ClimateDevice {
 
     private double currentTemp;
     private double targetTemp;
 
-    public Thermostat(String name, BigDecimal price, LocalDate installedDate, double currentTemp, double targetTemp) {
-        super(name, price, installedDate);
+    public Thermostat(String name, BigDecimal price, LocalDate installedDate, double currentTemp, double targetTemp, Double maximumTemp) {
+        super(name, price, installedDate, maximumTemp);
         this.currentTemp = currentTemp;
         this.targetTemp = targetTemp;
     }
@@ -38,4 +40,10 @@ public class Thermostat extends Device {
     public String adjustTemp() {
         return getName() + ": adjusting from " + currentTemp + "°C to target " + targetTemp + "°C.";
     }
+
+    @Override
+    public void operate() {
+        System.out.println(name + " is thermostating");
+    }
+
 }

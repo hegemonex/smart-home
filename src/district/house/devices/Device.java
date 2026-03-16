@@ -2,14 +2,15 @@ package district.house.devices;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
-public class Device {
+public abstract class Device {
 
-    private static int deviceCount = 0;
+    protected static int deviceCount = 0;   // protected #1
 
-    private String name;
-    private BigDecimal price;
-    private LocalDate installedDate;
+    protected String name;                  // protected #2
+    protected BigDecimal price;
+    protected LocalDate installedDate;
 
     public Device(String name, BigDecimal price, LocalDate installedDate) {
         this.name = name;
@@ -22,28 +23,24 @@ public class Device {
         return deviceCount;
     }
 
-    public static void setDeviceCount(int deviceCount) {
-        Device.deviceCount = deviceCount;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
     public LocalDate getInstalledDate() {
         return installedDate;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public void setInstalledDate(LocalDate installedDate) {
@@ -52,5 +49,30 @@ public class Device {
 
     public String deviceInfo() {
         return name + " (installed: " + installedDate + ", price: $" + price + ")";
+    }
+
+    // ABSTRACT METHOD (must be overridden)
+    public abstract void operate();
+
+    // OBJECT METHOD OVERRIDES
+
+    @Override
+    public String toString() {
+        return "Device{name='" + name + "', price=" + price + ", installedDate=" + installedDate + "}";
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, price, installedDate);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Device)) return false;
+        Device other = (Device) obj;
+        return Objects.equals(name, other.name) &&
+                Objects.equals(price, other.price) &&
+                Objects.equals(installedDate, other.installedDate);
     }
 }

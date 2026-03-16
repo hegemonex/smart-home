@@ -1,16 +1,19 @@
-package district.house.devices;
+package district.house.devices.smartDevices;
+
+import district.house.devices.Device;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class SmartLight extends Device {
+public class SmartLight extends SmartDevice {
 
     private String color;
     private String model;
     private int brightness;
 
-    public SmartLight(String name, BigDecimal price, LocalDate installedDate, String color, String model, int brightness) {
-        super(name, price, installedDate);
+    public SmartLight(String name, BigDecimal price, LocalDate installedDate, String color,
+                      String model, int brightness, boolean connected) {
+        super(name, price, installedDate, connected);
         this.color = color;
         this.model = model;
         this.brightness = brightness;
@@ -52,4 +55,10 @@ public class SmartLight extends Device {
     public String turnOff() {
         return getName() + " light is OFF.";
     }
+
+    @Override
+    public void operate() {
+        System.out.println(name + " is lighting");
+    }
+
 }

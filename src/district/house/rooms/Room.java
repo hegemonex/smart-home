@@ -1,4 +1,4 @@
-package district.house;
+package district.house.rooms;
 
 import district.house.devices.DeviceGroup;
 
@@ -6,9 +6,9 @@ import java.math.BigDecimal;
 
 public class Room {
 
-    private String name;
-    private BigDecimal area;
-    private DeviceGroup[] deviceGroups;
+    protected String name;
+    protected BigDecimal area;
+    protected DeviceGroup[] deviceGroups;
 
     public Room(String name, BigDecimal area, DeviceGroup[] deviceGroups) {
         this.name = name;

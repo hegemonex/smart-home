@@ -55,4 +55,10 @@ public class SmartDoorLock extends Device {
         lastUnlocked = LocalDateTime.now();
         return getName() + " is now UNLOCKED at " + lastUnlocked;
     }
+
+    @Override
+    public void operate() {
+        System.out.println(name + " is locking");
+    }
+
 }

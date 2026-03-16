@@ -1,10 +1,12 @@
-package district.house.devices;
+package district.house.devices.sensors;
+
+import district.house.devices.Device;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class SecurityCamera extends Device {
+public class SecurityCamera extends Sensor {
 
     private String resolution;
     private String sensorType;
@@ -12,8 +14,8 @@ public class SecurityCamera extends Device {
     private LocalDateTime lastMotionDetected;
 
     public SecurityCamera(String name, BigDecimal price, LocalDate installedDate,
-                          String resolution, String sensorType) {
-        super(name, price, installedDate);
+                          String resolution, String sensorType, Double sensorValue) {
+        super(name, price, installedDate, sensorValue);
         this.resolution = resolution;
         this.sensorType = sensorType;
         this.recording = false;
@@ -68,4 +70,10 @@ public class SecurityCamera extends Device {
         lastMotionDetected = LocalDateTime.now();
         return getName() + " detected motion at " + lastMotionDetected;
     }
+
+    @Override
+    public void operate() {
+        System.out.println(name + " is monitoring");
+    }
+
 }
