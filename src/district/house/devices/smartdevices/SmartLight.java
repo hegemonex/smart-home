@@ -1,18 +1,18 @@
-package district.house.devices.smartDevices;
+package district.house.devices.smartdevices;
 
-import district.house.devices.Device;
+import district.house.devices.Connectable;
+import district.house.devices.Switchable;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class SmartLight extends SmartDevice {
+public class SmartLight extends SmartDevice implements Connectable, Switchable {
 
     private String color;
     private String model;
     private int brightness;
 
-    public SmartLight(String name, BigDecimal price, LocalDate installedDate, String color,
-                      String model, int brightness, boolean connected) {
+    public SmartLight(String name, BigDecimal price, LocalDate installedDate, String color, String model, int brightness, boolean connected) {
         super(name, price, installedDate, connected);
         this.color = color;
         this.model = model;
@@ -61,4 +61,23 @@ public class SmartLight extends SmartDevice {
         System.out.println(name + " is lighting");
     }
 
+    @Override
+    public void connect() {
+        System.out.println(name + " is connecting");
+    }
+
+    @Override
+    public void disconnect() {
+        System.out.println(name + " is disconnecting");
+    }
+
+    @Override
+    public void switchOn() {
+        System.out.println(name + " is switching on");
+    }
+
+    @Override
+    public void switchOff() {
+        System.out.println(name + " is switching off");
+    }
 }

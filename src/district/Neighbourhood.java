@@ -47,7 +47,6 @@ public class Neighbourhood {
     }
 
     public String neighbourhoodInfo() {
-        return "Neighbourhood: " + name + " | City: " + city
-                + " | Houses: " + totalHouses + " | Security Gate: " + hasSecurityGate;
+        return "Neighbourhood: " + name + " | City: " + city + " | Houses: " + totalHouses + " | Security Gate: " + hasSecurityGate;
     }
 }

@@ -6,9 +6,9 @@ import java.util.Objects;
 
 public abstract class Device {
 
-    protected static int deviceCount = 0;   // protected #1
+    protected static int deviceCount = 0;
 
-    protected String name;                  // protected #2
+    protected String name;
     protected BigDecimal price;
     protected LocalDate installedDate;
 
@@ -17,6 +17,18 @@ public abstract class Device {
         this.price = price;
         this.installedDate = installedDate;
         deviceCount++;
+    }
+
+    static {
+        System.out.println("Device class loaded. Smart Home system starting...");
+    }
+
+    {
+        System.out.println("A device object is being created.");
+    }
+
+    public final void printDeviceName() {
+        System.out.println(name);
     }
 
     public static int getDeviceCount() {
@@ -71,8 +83,6 @@ public abstract class Device {
         if (this == obj) return true;
         if (!(obj instanceof Device)) return false;
         Device other = (Device) obj;
-        return Objects.equals(name, other.name) &&
-                Objects.equals(price, other.price) &&
-                Objects.equals(installedDate, other.installedDate);
+        return Objects.equals(name, other.name) && Objects.equals(price, other.price) && Objects.equals(installedDate, other.installedDate);
     }
 }

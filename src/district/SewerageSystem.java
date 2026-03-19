@@ -49,7 +49,6 @@ public class SewerageSystem {
     }
 
     public String sewerageInfo() {
-        return "Sewerage | Provider: " + provider + " | Connected: " + connected
-                + " | Pipe: " + pipeType + " | Last Inspected: " + lastInspected;
+        return "Sewerage | Provider: " + provider + " | Connected: " + connected + " | Pipe: " + pipeType + " | Last Inspected: " + lastInspected;
     }
 }

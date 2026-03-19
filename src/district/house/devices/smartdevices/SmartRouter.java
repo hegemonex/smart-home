@@ -1,19 +1,18 @@
-package district.house.devices.smartDevices;
+package district.house.devices.smartdevices;
 
 
-import district.house.devices.Device;
+import district.house.devices.Connectable;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class SmartRouter extends SmartDevice {
+public class SmartRouter extends SmartDevice implements Connectable {
 
     private String ssid;
     private int connectedDevicesCount;
     private double bandwidthGbps;
 
-    public SmartRouter(String name, BigDecimal price, LocalDate installedDate,
-                       String ssid, int connectedDevicesCount, double bandwidthGbps, boolean connected) {
+    public SmartRouter(String name, BigDecimal price, LocalDate installedDate, String ssid, int connectedDevicesCount, double bandwidthGbps, boolean connected) {
         super(name, price, installedDate, connected);
         this.ssid = ssid;
         this.connectedDevicesCount = connectedDevicesCount;
@@ -46,8 +45,7 @@ public class SmartRouter extends SmartDevice {
 
     @Override
     public String deviceInfo() {
-        return super.deviceInfo() + " | SSID: " + ssid + ", Connected: " + connectedDevicesCount
-                + " devices, Bandwidth: " + bandwidthGbps + " Gbps";
+        return super.deviceInfo() + " | SSID: " + ssid + ", Connected: " + connectedDevicesCount + " devices, Bandwidth: " + bandwidthGbps + " Gbps";
     }
 
     public String showNetworkStatus() {
@@ -63,4 +61,13 @@ public class SmartRouter extends SmartDevice {
         System.out.println(name + " is routering");
     }
 
+    @Override
+    public void connect() {
+        System.out.println(name + " is connecting");
+    }
+
+    @Override
+    public void disconnect() {
+        System.out.println(name + " is disconnecting");
+    }
 }

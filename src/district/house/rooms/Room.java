@@ -16,14 +16,29 @@ public class Room {
         this.deviceGroups = deviceGroups;
     }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public String getName() {
+        return name;
+    }
 
-    public BigDecimal getArea() { return area; }
-    public void setArea(BigDecimal area) { this.area = area; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public DeviceGroup[] getDeviceGroups() { return deviceGroups; }
-    public void setDeviceGroups(DeviceGroup[] deviceGroups) { this.deviceGroups = deviceGroups; }
+    public BigDecimal getArea() {
+        return area;
+    }
+
+    public void setArea(BigDecimal area) {
+        this.area = area;
+    }
+
+    public DeviceGroup[] getDeviceGroups() {
+        return deviceGroups;
+    }
+
+    public void setDeviceGroups(DeviceGroup[] deviceGroups) {
+        this.deviceGroups = deviceGroups;
+    }
 
     public String listGroups() {
         if (deviceGroups == null || deviceGroups.length == 0) {

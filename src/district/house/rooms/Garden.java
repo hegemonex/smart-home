@@ -1,7 +1,10 @@
 package district.house.rooms;
 
+import district.house.devices.DeviceGroup;
+
 import java.math.BigDecimal;
-import district.house.devices.DeviceGroup;;
+
+;
 
 public class Garden extends Room {
 

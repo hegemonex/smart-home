@@ -12,14 +12,29 @@ public class DeviceZone {
         this.devices = devices;
     }
 
-    public String getZoneName() { return zoneName; }
-    public void setZoneName(String zoneName) { this.zoneName = zoneName; }
+    public String getZoneName() {
+        return zoneName;
+    }
 
-    public String getLocation() { return location; }
-    public void setLocation(String location) { this.location = location; }
+    public void setZoneName(String zoneName) {
+        this.zoneName = zoneName;
+    }
 
-    public Device[] getDevices() { return devices; }
-    public void setDevices(Device[] devices) { this.devices = devices; }
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public Device[] getDevices() {
+        return devices;
+    }
+
+    public void setDevices(Device[] devices) {
+        this.devices = devices;
+    }
 
     public String listDevices() {
         if (devices == null || devices.length == 0) {

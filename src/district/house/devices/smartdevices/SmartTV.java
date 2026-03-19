@@ -1,19 +1,18 @@
-package district.house.devices.smartDevices;
+package district.house.devices.smartdevices;
 
-import district.house.devices.Device;
+import district.house.devices.Connectable;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class SmartTV extends SmartDevice {
+public class SmartTV extends SmartDevice implements Connectable {
 
     private String brand;
     private int screenSize;
     private boolean isOn;
 
-    public SmartTV(String name, BigDecimal price, LocalDate installedDate,
-                   String brand, int screenSize, boolean connected) {
-        super(name, price, installedDate,  connected);
+    public SmartTV(String name, BigDecimal price, LocalDate installedDate, String brand, int screenSize, boolean connected) {
+        super(name, price, installedDate, connected);
         this.brand = brand;
         this.screenSize = screenSize;
         this.isOn = false;
@@ -63,4 +62,13 @@ public class SmartTV extends SmartDevice {
         System.out.println(name + " is televisioning");
     }
 
+    @Override
+    public void connect() {
+        System.out.println(name + " is connecting");
+    }
+
+    @Override
+    public void disconnect() {
+        System.out.println(name + " is disconnecting");
+    }
 }

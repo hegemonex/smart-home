@@ -1,4 +1,4 @@
-package district.house.devices.smartDevices;
+package district.house.devices.smartdevices;
 
 import district.house.devices.Device;
 

@@ -1,4 +1,4 @@
-package district.house.devices.climateDevice;
+package district.house.devices.climatedevice;
 
 import district.house.devices.Device;
 

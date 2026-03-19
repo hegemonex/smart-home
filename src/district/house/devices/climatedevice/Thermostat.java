@@ -1,11 +1,11 @@
-package district.house.devices.climateDevice;
+package district.house.devices.climatedevice;
 
-import district.house.devices.Device;
+import district.house.devices.TemperatureControl;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class Thermostat extends ClimateDevice {
+public class Thermostat extends ClimateDevice implements TemperatureControl {
 
     private double currentTemp;
     private double targetTemp;
@@ -46,4 +46,8 @@ public class Thermostat extends ClimateDevice {
         System.out.println(name + " is thermostating");
     }
 
+    @Override
+    public void setTemperature(double temperature) {
+        System.out.println("Temperature set to " + temperature);
+    }
 }
