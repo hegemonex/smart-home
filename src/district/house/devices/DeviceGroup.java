@@ -1,5 +1,7 @@
 package district.house.devices;
 
+import exceptions.DeviceNotFoundException;
+
 public class DeviceGroup {
 
     private String groupName;
@@ -12,7 +14,10 @@ public class DeviceGroup {
         this.zones = zones;
     }
 
-    public String getGroupName() {
+    public String getGroupName() throws DeviceNotFoundException {
+        if (groupName == null) {
+            throw new DeviceNotFoundException("The devices weren't found");
+        }
         return groupName;
     }
 

@@ -1,6 +1,7 @@
 import district.*;
 import district.house.Owner;
 import district.house.SmartHome;
+import district.house.SmartHomeLogger;
 import district.house.SolarPanel;
 import district.house.devices.Connectable;
 import district.house.devices.Device;
@@ -12,6 +13,7 @@ import district.house.devices.sensors.MotionSensor;
 import district.house.devices.sensors.SecurityCamera;
 import district.house.devices.smartdevices.*;
 import district.house.rooms.*;
+import exceptions.DeviceInstallationException;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -137,7 +139,25 @@ public class Main {
 
         connectDevice(tv);
         connectDevice(router);
+
+        try {
+            Device device4 = new SmartLight();
+            device4.setInstalledDate(null);
+        } catch (DeviceInstallationException e) {
+            System.out.println("there is no device installed");
+        }
+
+        try (SmartHomeLogger logger = new SmartHomeLogger()) {
+
+            logger.log("Smart home system started");
+
+        } catch (Exception e) {
+
+            System.out.println("Logging error: " + e.getMessage());
+
+        }
     }
+
 
     public static void connectDevice(Connectable device) {
 

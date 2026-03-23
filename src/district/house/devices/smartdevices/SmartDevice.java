@@ -1,20 +1,28 @@
 package district.house.devices.smartdevices;
 
 import district.house.devices.Device;
+import exceptions.NetworkConnectionException;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public abstract class SmartDevice extends Device {
 
-    protected boolean connectedToWifi;
+    protected boolean connectedToWifi =  false;
 
     public SmartDevice(String name, BigDecimal price, LocalDate installedDate, boolean connectedToWifi) {
         super(name, price, installedDate);
         this.connectedToWifi = connectedToWifi;
     }
 
-    public boolean isConnectedToWifi() {
+    public SmartDevice(){
+        super();
+    }
+
+    public boolean isConnectedToWifi() throws NetworkConnectionException {
+        if (connectedToWifi == false) {
+            throw new NetworkConnectionException("The device is not connected");
+        }
         return connectedToWifi;
     }
 

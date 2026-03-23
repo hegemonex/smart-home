@@ -1,6 +1,7 @@
 package district.house.devices.climatedevice;
 
 import district.house.devices.Device;
+import exceptions.InvalidTemperatureException;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -18,7 +19,10 @@ public abstract class ClimateDevice extends Device {
         return temperatureSetting;
     }
 
-    public void setTemperatureSetting(double temperatureSetting) {
+    public void setTemperatureSetting(double temperatureSetting) throws InvalidTemperatureException {
+        if(temperatureSetting < 0 || temperatureSetting > 100) {
+            throw new InvalidTemperatureException("Invalid temperature setting");
+        }
         this.temperatureSetting = temperatureSetting;
     }
 

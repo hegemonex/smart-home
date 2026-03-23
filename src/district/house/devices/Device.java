@@ -1,5 +1,7 @@
 package district.house.devices;
 
+import exceptions.DeviceInstallationException;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -18,6 +20,8 @@ public abstract class Device {
         this.installedDate = installedDate;
         deviceCount++;
     }
+
+    public Device(){}
 
     static {
         System.out.println("Device class loaded. Smart Home system starting...");
@@ -55,7 +59,10 @@ public abstract class Device {
         this.price = price;
     }
 
-    public void setInstalledDate(LocalDate installedDate) {
+    public void setInstalledDate(LocalDate installedDate) throws DeviceInstallationException {
+        if (installedDate == null) {
+            throw new DeviceInstallationException("The device wasnt installed");
+        }
         this.installedDate = installedDate;
     }
 

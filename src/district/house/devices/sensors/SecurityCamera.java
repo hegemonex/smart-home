@@ -2,6 +2,7 @@ package district.house.devices.sensors;
 
 import district.house.devices.Monitorable;
 import district.house.devices.Security;
+import exceptions.SecurityAlertException;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -21,6 +22,10 @@ public class SecurityCamera extends Sensor implements Monitorable, Security {
         this.recording = false;
     }
 
+    public SecurityCamera(){
+        super();
+    }
+
     public String getResolution() {
         return resolution;
     }
@@ -33,7 +38,10 @@ public class SecurityCamera extends Sensor implements Monitorable, Security {
         return sensorType;
     }
 
-    public void setSensorType(String sensorType) {
+    public void setSensorType(String sensorType) throws SecurityAlertException {
+        if (sensorType == null) {
+            throw new SecurityAlertException("Sensor type cannot be null");
+        }
         this.sensorType = sensorType;
     }
 

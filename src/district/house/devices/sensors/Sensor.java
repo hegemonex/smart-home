@@ -14,6 +14,8 @@ public abstract class Sensor extends Device {
         this.sensorValue = sensorValue;
     }
 
+    public Sensor(){}
+
     public double getSensorValue() {
         return sensorValue;
     }

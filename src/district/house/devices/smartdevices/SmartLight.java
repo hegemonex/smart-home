@@ -18,6 +18,9 @@ public class SmartLight extends SmartDevice implements Connectable, Switchable {
         this.model = model;
         this.brightness = brightness;
     }
+    public SmartLight(){
+        super();
+    }
 
     public String getColor() {
         return color;
