@@ -2,7 +2,6 @@ package district.house.devices.sensors;
 
 import district.house.devices.Monitorable;
 import district.house.devices.Security;
-import exceptions.SecurityAlertException;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -16,13 +15,13 @@ public class SecurityCamera extends Sensor implements Monitorable, Security {
     private LocalDateTime lastMotionDetected;
 
     public SecurityCamera(String name, BigDecimal price, LocalDate installedDate, String resolution, String sensorType, Double sensorValue) {
-        super(name, price, installedDate, sensorValue);
+        super(name, price, installedDate, sensorValue, sensorType);
         this.resolution = resolution;
         this.sensorType = sensorType;
         this.recording = false;
     }
 
-    public SecurityCamera(){
+    public SecurityCamera() {
         super();
     }
 
@@ -36,13 +35,6 @@ public class SecurityCamera extends Sensor implements Monitorable, Security {
 
     public String getSensorType() {
         return sensorType;
-    }
-
-    public void setSensorType(String sensorType) throws SecurityAlertException {
-        if (sensorType == null) {
-            throw new SecurityAlertException("Sensor type cannot be null");
-        }
-        this.sensorType = sensorType;
     }
 
     public boolean isRecording() {

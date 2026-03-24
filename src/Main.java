@@ -14,8 +14,6 @@ import district.house.devices.sensors.SecurityCamera;
 import district.house.devices.smartdevices.*;
 import district.house.rooms.*;
 import exceptions.DeviceInstallationException;
-import exceptions.InvalidTemperatureException;
-import exceptions.NetworkConnectionException;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -37,7 +35,7 @@ public class Main {
 
         SmartAirConditioner livingRoomAC = new SmartAirConditioner("Living Room AC", new BigDecimal("349.99"), LocalDate.of(2023, 6, 15), "Cool", 21.0, 3, 26.7);
 
-        MotionSensor hallwaySensor = new MotionSensor("Hallway Motion Sensor", new BigDecimal("39.99"), LocalDate.of(2024, 2, 14), 7, 10, 67.8);
+        MotionSensor hallwaySensor = new MotionSensor("Hallway Motion Sensor", new BigDecimal("39.99"), LocalDate.of(2024, 2, 14), 7, 10, 67.8, "Super sensitive");
 
         SmartDoorLock mainDoorLock = new SmartDoorLock("Main Door Lock", new BigDecimal("199.99"), LocalDate.of(2024, 1, 20), "Yale Assure");
 
@@ -147,6 +145,8 @@ public class Main {
             device4.setInstalledDate(null);
         } catch (DeviceInstallationException e) {
             System.out.println("there is no device installed");
+        } finally {
+            System.out.println("Instalation attempt finished");
         }
 
         try (SmartHomeLogger logger = new SmartHomeLogger()) {
@@ -159,20 +159,11 @@ public class Main {
 
         }
 
-        try {
-            SmartRouter router1 = new SmartRouter();
-            router1.startRouter();
-        } catch (NetworkConnectionException e) {
-            System.out.println(e.getMessage());
-        }finally {
-            System.out.println("Connection attempt finished");
-        }
+        SmartRouter router1 = new SmartRouter();
+        router1.startRouter();
 
-        try {
-            livingRoomThermostat.setTemperatureSetting(-50);
-        } catch (InvalidTemperatureException e) {
-            System.out.println(e.getMessage());
-        }
+        livingRoomThermostat.setTemperatureSetting(-50);
+
     }
 
 

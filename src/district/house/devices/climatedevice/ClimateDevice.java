@@ -19,8 +19,8 @@ public abstract class ClimateDevice extends Device {
         return temperatureSetting;
     }
 
-    public void setTemperatureSetting(double temperatureSetting) throws InvalidTemperatureException {
-        if(temperatureSetting < 0 || temperatureSetting > 100) {
+    public void setTemperatureSetting(double temperatureSetting) {
+        if (temperatureSetting < 0 || temperatureSetting > 100) {
             throw new InvalidTemperatureException("Invalid temperature setting");
         }
         this.temperatureSetting = temperatureSetting;

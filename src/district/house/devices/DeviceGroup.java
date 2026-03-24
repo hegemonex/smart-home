@@ -14,7 +14,7 @@ public class DeviceGroup {
         this.zones = zones;
     }
 
-    public String getGroupName() throws DeviceNotFoundException {
+    public String getGroupName() {
         if (groupName == null) {
             throw new DeviceNotFoundException("The devices weren't found");
         }

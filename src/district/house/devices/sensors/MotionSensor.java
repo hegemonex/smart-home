@@ -11,8 +11,8 @@ public class MotionSensor extends Sensor implements Monitorable {
     private boolean motionDetected;
     private int detectionRangeMeters;
 
-    public MotionSensor(String name, BigDecimal price, LocalDate installedDate, int sensitivity, int detectionRangeMeters, Double sensorValue) {
-        super(name, price, installedDate, sensorValue);
+    public MotionSensor(String name, BigDecimal price, LocalDate installedDate, int sensitivity, int detectionRangeMeters, Double sensorValue,  String sensorType) {
+        super(name, price, installedDate, sensorValue, sensorType);
         this.sensitivity = sensitivity;
         this.detectionRangeMeters = detectionRangeMeters;
         this.motionDetected = false;
