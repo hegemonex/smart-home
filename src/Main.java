@@ -14,6 +14,8 @@ import district.house.devices.sensors.SecurityCamera;
 import district.house.devices.smartdevices.*;
 import district.house.rooms.*;
 import exceptions.DeviceInstallationException;
+import exceptions.InvalidTemperatureException;
+import exceptions.NetworkConnectionException;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -155,6 +157,21 @@ public class Main {
 
             System.out.println("Logging error: " + e.getMessage());
 
+        }
+
+        try {
+            SmartRouter router1 = new SmartRouter();
+            router1.startRouter();
+        } catch (NetworkConnectionException e) {
+            System.out.println(e.getMessage());
+        }finally {
+            System.out.println("Connection attempt finished");
+        }
+
+        try {
+            livingRoomThermostat.setTemperatureSetting(-50);
+        } catch (InvalidTemperatureException e) {
+            System.out.println(e.getMessage());
         }
     }
 

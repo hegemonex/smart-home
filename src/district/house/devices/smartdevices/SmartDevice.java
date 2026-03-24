@@ -20,7 +20,7 @@ public abstract class SmartDevice extends Device {
     }
 
     public boolean isConnectedToWifi() throws NetworkConnectionException {
-        if (connectedToWifi == false) {
+        if (!connectedToWifi) {
             throw new NetworkConnectionException("The device is not connected");
         }
         return connectedToWifi;

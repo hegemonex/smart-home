@@ -19,6 +19,8 @@ public class SmartRouter extends SmartDevice implements Connectable {
         this.bandwidthGbps = bandwidthGbps;
     }
 
+    public SmartRouter(){}
+
     public String getSsid() {
         return ssid;
     }
@@ -64,6 +66,11 @@ public class SmartRouter extends SmartDevice implements Connectable {
     @Override
     public void connect() {
         System.out.println(name + " is connecting");
+    }
+
+    public boolean startRouter(){
+        connectedToWifi = true;
+        return true;
     }
 
     @Override
