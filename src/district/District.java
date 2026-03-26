@@ -14,17 +14,37 @@ public class District {
         this.streets = streets;
     }
 
-    public String getDistrictName() { return districtName; }
-    public void setDistrictName(String districtName) { this.districtName = districtName; }
+    public String getDistrictName() {
+        return districtName;
+    }
 
-    public String getCity() { return city; }
-    public void setCity(String city) { this.city = city; }
+    public void setDistrictName(String districtName) {
+        this.districtName = districtName;
+    }
 
-    public String getCountry() { return country; }
-    public void setCountry(String country) { this.country = country; }
+    public String getCity() {
+        return city;
+    }
 
-    public Street[] getStreets() { return streets; }
-    public void setStreets(Street[] streets) { this.streets = streets; }
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public Street[] getStreets() {
+        return streets;
+    }
+
+    public void setStreets(Street[] streets) {
+        this.streets = streets;
+    }
 
     public String districtInfo() {
         return "District: " + districtName + " | City: " + city + " | Country: " + country

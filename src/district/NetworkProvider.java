@@ -49,7 +49,6 @@ public class NetworkProvider {
     }
 
     public String networkInfo() {
-        return "Network Provider: " + companyName + " | Speed: " + speedMbps
-                + " Mbps | Type: " + connectionType + " | Fee: $" + monthlyFee + "/month";
+        return "Network Provider: " + companyName + " | Speed: " + speedMbps + " Mbps | Type: " + connectionType + " | Fee: $" + monthlyFee + "/month";
     }
 }

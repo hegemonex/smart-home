@@ -1,4 +1,4 @@
-package district.house;
+package district.house.rooms;
 
 public class Floor {
 
@@ -12,14 +12,29 @@ public class Floor {
         this.rooms = rooms;
     }
 
-    public int getFloorNumber() { return floorNumber; }
-    public void setFloorNumber(int floorNumber) { this.floorNumber = floorNumber; }
+    public int getFloorNumber() {
+        return floorNumber;
+    }
 
-    public String getLabel() { return label; }
-    public void setLabel(String label) { this.label = label; }
+    public void setFloorNumber(int floorNumber) {
+        this.floorNumber = floorNumber;
+    }
 
-    public Room[] getRooms() { return rooms; }
-    public void setRooms(Room[] rooms) { this.rooms = rooms; }
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public Room[] getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(Room[] rooms) {
+        this.rooms = rooms;
+    }
 
     public String listRooms() {
         if (rooms == null || rooms.length == 0) {

@@ -1,10 +1,13 @@
-package district.house.devices;
+package district.house.devices.smartdevices;
+
+import district.house.devices.Connectable;
+import district.house.devices.Device;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class SmartDoorLock extends Device {
+public class SmartDoorLock extends Device implements Connectable {
 
     private String lockModel;
     private boolean locked;
@@ -54,5 +57,20 @@ public class SmartDoorLock extends Device {
         locked = false;
         lastUnlocked = LocalDateTime.now();
         return getName() + " is now UNLOCKED at " + lastUnlocked;
+    }
+
+    @Override
+    public void operate() {
+        System.out.println(name + " is locking");
+    }
+
+    @Override
+    public void connect() {
+        System.out.println(name + " is connecting");
+    }
+
+    @Override
+    public void disconnect() {
+        System.out.println(name + " is disconnecting");
     }
 }

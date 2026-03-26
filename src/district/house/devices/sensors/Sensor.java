@@ -1,0 +1,42 @@
+package district.house.devices.sensors;
+
+import district.house.devices.Device;
+import exceptions.SecurityAlertException;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+public abstract class Sensor extends Device {
+
+    protected double sensorValue;
+    protected String sensorType;
+
+    public Sensor(String name, BigDecimal price, LocalDate installedDate, double sensorValue, String sensorType) {
+        super(name, price, installedDate);
+        this.sensorValue = sensorValue;
+        this.sensorType = sensorType;
+    }
+
+    public void setSensorType(String sensorType) {
+        if (sensorType == null) {
+            throw new SecurityAlertException("Sensor type cannot be null");
+        }
+        this.sensorType = sensorType;
+    }
+
+    public Sensor() {
+    }
+
+    public double getSensorValue() {
+        return sensorValue;
+    }
+
+    public void setSensorValue(double sensorValue) {
+        this.sensorValue = sensorValue;
+    }
+
+    @Override
+    public void operate() {
+        System.out.println(name + " is detecting something. Current value: " + sensorValue);
+    }
+}

@@ -1,17 +1,18 @@
-package district.house.devices;
+package district.house.devices.sensors;
+
+import district.house.devices.Monitorable;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class MotionSensor extends Device {
+public class MotionSensor extends Sensor implements Monitorable {
 
     private int sensitivity;
     private boolean motionDetected;
     private int detectionRangeMeters;
 
-    public MotionSensor(String name, BigDecimal price, LocalDate installedDate,
-                        int sensitivity, int detectionRangeMeters) {
-        super(name, price, installedDate);
+    public MotionSensor(String name, BigDecimal price, LocalDate installedDate, int sensitivity, int detectionRangeMeters, Double sensorValue,  String sensorType) {
+        super(name, price, installedDate, sensorValue, sensorType);
         this.sensitivity = sensitivity;
         this.detectionRangeMeters = detectionRangeMeters;
         this.motionDetected = false;
@@ -46,11 +47,26 @@ public class MotionSensor extends Device {
         return super.deviceInfo() + " | Sensitivity: " + sensitivity + ", Range: " + detectionRangeMeters + "m";
     }
 
+    @Override
+    public void operate() {
+        System.out.println(name + " is sensoring");
+    }
+
     public String detectMotion() {
         if (motionDetected) {
             return getName() + ": Motion detected! Alert!";
         } else {
             return getName() + ": No motion detected.";
         }
+    }
+
+    @Override
+    public void monitor() {
+        System.out.println(name + " is monitoring");
+    }
+
+    @Override
+    public void detect() {
+        System.out.println(name + " is detecting");
     }
 }

@@ -49,7 +49,6 @@ public class SecurityCompany {
     }
 
     public String securityInfo() {
-        return "Security Company: " + name + " | Contact: " + contactNumber
-                + " | Fee: $" + monthlyFee + "/month | Armed: " + armed;
+        return "Security Company: " + name + " | Contact: " + contactNumber + " | Fee: $" + monthlyFee + "/month | Armed: " + armed;
     }
 }

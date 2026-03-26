@@ -1,15 +1,18 @@
 package district.house.devices;
 
+import exceptions.DeviceInstallationException;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
-public class Device {
+public abstract class Device {
 
-    private static int deviceCount = 0;
+    protected static int deviceCount = 0;
 
-    private String name;
-    private BigDecimal price;
-    private LocalDate installedDate;
+    protected String name;
+    protected BigDecimal price;
+    protected LocalDate installedDate;
 
     public Device(String name, BigDecimal price, LocalDate installedDate) {
         this.name = name;
@@ -18,39 +21,75 @@ public class Device {
         deviceCount++;
     }
 
-    public static int getDeviceCount() {
-        return deviceCount;
+    public Device(){}
+
+    static {
+        System.out.println("Device class loaded. Smart Home system starting...");
     }
 
-    public static void setDeviceCount(int deviceCount) {
-        Device.deviceCount = deviceCount;
+    {
+        System.out.println("A device object is being created.");
+    }
+
+    public final void printDeviceName() {
+        System.out.println(name);
+    }
+
+    public static int getDeviceCount() {
+        return deviceCount;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public BigDecimal getPrice() {
         return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
     }
 
     public LocalDate getInstalledDate() {
         return installedDate;
     }
 
-    public void setInstalledDate(LocalDate installedDate) {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public void setInstalledDate(LocalDate installedDate) throws DeviceInstallationException {
+        if (installedDate == null) {
+            throw new DeviceInstallationException("The device wasnt installed");
+        }
         this.installedDate = installedDate;
     }
 
     public String deviceInfo() {
         return name + " (installed: " + installedDate + ", price: $" + price + ")";
+    }
+
+    // ABSTRACT METHOD (must be overridden)
+    public abstract void operate();
+
+    // OBJECT METHOD OVERRIDES
+
+    @Override
+    public String toString() {
+        return "Device{name='" + name + "', price=" + price + ", installedDate=" + installedDate + "}";
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, price, installedDate);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Device)) return false;
+        Device other = (Device) obj;
+        return Objects.equals(name, other.name) && Objects.equals(price, other.price) && Objects.equals(installedDate, other.installedDate);
     }
 }

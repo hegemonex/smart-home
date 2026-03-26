@@ -1,17 +1,18 @@
-package district.house.devices;
+package district.house.devices.smartdevices;
+
+import district.house.devices.Connectable;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class SmartPlug extends Device {
+public class SmartPlug extends SmartDevice implements Connectable {
 
     private String connectedDevice;
     private BigDecimal maxWattage;
     private boolean active;
 
-    public SmartPlug(String name, BigDecimal price, LocalDate installedDate,
-                     String connectedDevice, BigDecimal maxWattage) {
-        super(name, price, installedDate);
+    public SmartPlug(String name, BigDecimal price, LocalDate installedDate, String connectedDevice, BigDecimal maxWattage, boolean conected) {
+        super(name, price, installedDate, conected);
         this.connectedDevice = connectedDevice;
         this.maxWattage = maxWattage;
         this.active = false;
@@ -58,5 +59,20 @@ public class SmartPlug extends Device {
 
     public String showPowerUsage() {
         return connectedDevice + " is drawing up to " + maxWattage + "W.";
+    }
+
+    @Override
+    public void operate() {
+        System.out.println(name + " is plugging");
+    }
+
+    @Override
+    public void connect() {
+        System.out.println(name + " is connecting");
+    }
+
+    @Override
+    public void disconnect() {
+        System.out.println(name + " is disconnecting");
     }
 }

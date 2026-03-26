@@ -1,22 +1,28 @@
-package district.house.devices;
+package district.house.devices.sensors;
+
+import district.house.devices.Monitorable;
+import district.house.devices.Security;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class SecurityCamera extends Device {
+public class SecurityCamera extends Sensor implements Monitorable, Security {
 
     private String resolution;
     private String sensorType;
     private boolean recording;
     private LocalDateTime lastMotionDetected;
 
-    public SecurityCamera(String name, BigDecimal price, LocalDate installedDate,
-                          String resolution, String sensorType) {
-        super(name, price, installedDate);
+    public SecurityCamera(String name, BigDecimal price, LocalDate installedDate, String resolution, String sensorType, Double sensorValue) {
+        super(name, price, installedDate, sensorValue, sensorType);
         this.resolution = resolution;
         this.sensorType = sensorType;
         this.recording = false;
+    }
+
+    public SecurityCamera() {
+        super();
     }
 
     public String getResolution() {
@@ -29,10 +35,6 @@ public class SecurityCamera extends Device {
 
     public String getSensorType() {
         return sensorType;
-    }
-
-    public void setSensorType(String sensorType) {
-        this.sensorType = sensorType;
     }
 
     public boolean isRecording() {
@@ -67,5 +69,25 @@ public class SecurityCamera extends Device {
     public String logMotion() {
         lastMotionDetected = LocalDateTime.now();
         return getName() + " detected motion at " + lastMotionDetected;
+    }
+
+    @Override
+    public void operate() {
+        System.out.println(name + " is monitoring");
+    }
+
+    @Override
+    public void monitor() {
+        System.out.println(name + " is monitoring");
+    }
+
+    @Override
+    public void detect() {
+        System.out.println(name + " is detecting");
+    }
+
+    @Override
+    public void alert() {
+        System.out.println(name + " is detecting");
     }
 }

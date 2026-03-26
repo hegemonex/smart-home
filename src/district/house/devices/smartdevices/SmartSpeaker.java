@@ -1,17 +1,19 @@
-package district.house.devices;
+package district.house.devices.smartdevices;
+
+import district.house.devices.Connectable;
+import district.house.devices.Switchable;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class SmartSpeaker extends Device {
+public class SmartSpeaker extends SmartDevice implements Connectable, Switchable {
 
     private String assistantName;
     private int volume;
     private int maxVolume;
 
-    public SmartSpeaker(String name, BigDecimal price, LocalDate installedDate,
-                        String assistantName, int volume, int maxVolume) {
-        super(name, price, installedDate);
+    public SmartSpeaker(String name, BigDecimal price, LocalDate installedDate, String assistantName, int volume, int maxVolume, boolean connected) {
+        super(name, price, installedDate, connected);
         this.assistantName = assistantName;
         this.volume = volume;
         this.maxVolume = maxVolume;
@@ -58,5 +60,30 @@ public class SmartSpeaker extends Device {
             volume--;
         }
         return getName() + " volume turned down to " + volume;
+    }
+
+    @Override
+    public void operate() {
+        System.out.println(name + " is speaking");
+    }
+
+    @Override
+    public void connect() {
+        System.out.println(name + " is speaking");
+    }
+
+    @Override
+    public void disconnect() {
+        System.out.println(name + " is speaking");
+    }
+
+    @Override
+    public void switchOn() {
+        System.out.println(name + " is speaking");
+    }
+
+    @Override
+    public void switchOff() {
+        System.out.println(name + " is speaking");
     }
 }

@@ -50,7 +50,6 @@ public class SolarPanel {
     }
 
     public String solarInfo() {
-        return "Solar Panel | Manufacturer: " + manufacturer + " | Output: " + outputKw
-                + " kW | Panels: " + panelCount + " | Installed: " + installedDate;
+        return "Solar Panel | Manufacturer: " + manufacturer + " | Output: " + outputKw + " kW | Panels: " + panelCount + " | Installed: " + installedDate;
     }
 }
