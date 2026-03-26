@@ -3,6 +3,7 @@ package district.house.rooms;
 import district.house.devices.DeviceGroup;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 ;
 
@@ -10,7 +11,7 @@ public class Garden extends Room {
 
     private boolean hasIrrigation;
 
-    public Garden(String name, BigDecimal area, DeviceGroup[] groups, boolean hasIrrigation) {
+    public Garden(String name, BigDecimal area, List<DeviceGroup> groups, boolean hasIrrigation) {
         super(name, area, groups);
         this.hasIrrigation = hasIrrigation;
     }

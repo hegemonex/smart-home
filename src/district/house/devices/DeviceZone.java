@@ -1,15 +1,18 @@
 package district.house.devices;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class DeviceZone {
 
     private String zoneName;
     private String location;
-    private Device[] devices;
+    private Map<Device, String> devicePlacementMap;
 
-    public DeviceZone(String zoneName, String location, Device[] devices) {
+    public DeviceZone(String zoneName, String location) {
         this.zoneName = zoneName;
         this.location = location;
-        this.devices = devices;
+        this.devicePlacementMap = new HashMap<>();
     }
 
     public String getZoneName() {
@@ -28,23 +31,44 @@ public class DeviceZone {
         this.location = location;
     }
 
-    public Device[] getDevices() {
-        return devices;
+    public Map<Device, String> getDevicePlacementMap() {
+        return devicePlacementMap;
     }
 
-    public void setDevices(Device[] devices) {
-        this.devices = devices;
+    public void addDevice(Device device, String placement) {
+        devicePlacementMap.put(device, placement);
+    }
+
+    public void removeDevice(Device device) {
+        devicePlacementMap.remove(device);
     }
 
     public String listDevices() {
-        if (devices == null || devices.length == 0) {
-            return "        Zone [" + zoneName + " - " + location + "]: no devices";
+        if (devicePlacementMap.isEmpty()) {
+            return "Zone [" + zoneName + " - " + location + "]: no devices";
         }
-        String result = "        Zone [" + zoneName + " - " + location + "]: ";
-        for (int i = 0; i < devices.length; i++) {
-            result += devices[i].getName();
-            if (i < devices.length - 1) result += ", ";
+
+        StringBuilder result = new StringBuilder();
+        result.append("Zone [")
+                .append(zoneName)
+                .append(" - ")
+                .append(location)
+                .append("]: ");
+
+        int count = 0;
+        for (Map.Entry<Device, String> entry : devicePlacementMap.entrySet()) {
+            if (count > 0) {
+                result.append(", ");
+            }
+
+            result.append(entry.getKey().getName())
+                    .append(" [")
+                    .append(entry.getValue())
+                    .append("]");
+
+            count++;
         }
-        return result;
+
+        return result.toString();
     }
 }

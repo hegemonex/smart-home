@@ -3,12 +3,13 @@ package district.house.rooms;
 import district.house.devices.DeviceGroup;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class Garage extends Room {
 
     private int carCapacity;
 
-    public Garage(String name, BigDecimal area, DeviceGroup[] groups, int carCapacity) {
+    public Garage(String name, BigDecimal area, List<DeviceGroup> groups, int carCapacity) {
         super(name, area, groups);
         this.carCapacity = carCapacity;
     }

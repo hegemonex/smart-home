@@ -17,10 +17,21 @@ import exceptions.DeviceInstallationException;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
+    @SafeVarargs
+    private static <T> List<T> list(T... items) {
+        List<T> result = new ArrayList<>();
+        for (T item : items) result.add(item);
+        return result;
+    }
+
     public static void main(String[] args) {
+
+        List<DeviceGroup> deviceGroups = new ArrayList<>();
 
         // --- Devices ---
         SmartLight ceilingLight = new SmartLight("Ceiling Light", new BigDecimal("49.99"), LocalDate.of(2024, 3, 10), "Warm White", "Philips Hue", 80, true);
@@ -59,64 +70,64 @@ public class Main {
         SewerageSystem sewerageSystem = new SewerageSystem("City Sewerage Co.", true, LocalDate.of(2024, 9, 10), "PVC");
 
         // --- Rooms extending Room ---
-        Garage garage = new Garage("Garage", new BigDecimal("50.0"), new DeviceGroup[]{}, 2);
+        Garage garage = new Garage("Garage", new BigDecimal("50.0"), deviceGroups, 2);
 
-        Garden garden = new Garden("Garden", new BigDecimal("120.00"), new DeviceGroup[]{}, true);
+        Garden garden = new Garden("Garden", new BigDecimal("120.00"), deviceGroups, true);
 
-        HomeGym homeGym = new HomeGym("Home Gym", new BigDecimal("30.00"), new DeviceGroup[]{}, 10);
+        HomeGym homeGym = new HomeGym("Home Gym", new BigDecimal("30.00"), deviceGroups, 10);
 
         // --- Device Zones ---
-        DeviceZone northLighting = new DeviceZone("North Lighting", "North Wall", new Device[]{ceilingLight});
+        DeviceZone northLighting = new DeviceZone("North Lighting", "North Wall");
 
-        DeviceZone southLighting = new DeviceZone("South Lighting", "South Corner", new Device[]{floorLamp});
+        DeviceZone southLighting = new DeviceZone("South Lighting", "South Corner");
 
-        DeviceZone mainEntertainment = new DeviceZone("Main Entertainment", "East Wall", new Device[]{livingRoomTV, livingRoomSpeaker});
+        DeviceZone mainEntertainment = new DeviceZone("Main Entertainment", "East Wall");
 
-        DeviceZone climateControl = new DeviceZone("Climate Control", "Central", new Device[]{livingRoomThermostat, livingRoomAC});
+        DeviceZone climateControl = new DeviceZone("Climate Control", "Central");
 
-        DeviceZone entrySecurity = new DeviceZone("Entry Security", "Front Door", new Device[]{mainDoorLock, frontDoorCamera});
+        DeviceZone entrySecurity = new DeviceZone("Entry Security", "Front Door");
 
-        DeviceZone motionDetection = new DeviceZone("Motion Detection", "Ceiling", new Device[]{hallwaySensor});
+        DeviceZone motionDetection = new DeviceZone("Motion Detection", "Ceiling");
 
-        DeviceZone kitchenAppliances = new DeviceZone("Appliances", "Counter", new Device[]{coffeeMachinePlug});
+        DeviceZone kitchenAppliances = new DeviceZone("Appliances", "Counter");
 
-        DeviceZone networkZone = new DeviceZone("Network", "Desk", new Device[]{officeRouter});
+        DeviceZone networkZone = new DeviceZone("Network", "Desk");
 
         // --- Device Groups ---
-        DeviceGroup livingLighting = new DeviceGroup("Living Lighting", "Lighting", new DeviceZone[]{northLighting, southLighting});
+        DeviceGroup livingLighting = new DeviceGroup("Living Lighting", "Lighting", list(northLighting, southLighting));
 
-        DeviceGroup livingEntertainment = new DeviceGroup("Entertainment", "Entertainment", new DeviceZone[]{mainEntertainment});
+        DeviceGroup livingEntertainment = new DeviceGroup("Entertainment", "Entertainment", list(mainEntertainment));
 
-        DeviceGroup livingClimate = new DeviceGroup("Climate", "Climate", new DeviceZone[]{climateControl});
+        DeviceGroup livingClimate = new DeviceGroup("Climate", "Climate", list(climateControl));
 
-        DeviceGroup hallwaySecurity = new DeviceGroup("Security", "Security", new DeviceZone[]{entrySecurity, motionDetection});
+        DeviceGroup hallwaySecurity = new DeviceGroup("Security", "Security", list(entrySecurity, motionDetection));
 
-        DeviceGroup kitchenGroup = new DeviceGroup("Kitchen Devices", "Appliances", new DeviceZone[]{kitchenAppliances});
+        DeviceGroup kitchenGroup = new DeviceGroup("Kitchen Devices", "Appliances", list(kitchenAppliances));
 
-        DeviceGroup officeNetwork = new DeviceGroup("Network", "Network", new DeviceZone[]{networkZone});
+        DeviceGroup officeNetwork = new DeviceGroup("Network", "Network", list(networkZone));
 
         // --- Rooms ---
-        Room livingRoom = new Room("Living Room", new BigDecimal("35.00"), new DeviceGroup[]{livingLighting, livingEntertainment, livingClimate});
+        Room livingRoom = new Room("Living Room", new BigDecimal("35.00"), list(livingLighting, livingEntertainment, livingClimate));
 
-        Room hallway = new Room("Hallway", new BigDecimal("12.00"), new DeviceGroup[]{hallwaySecurity});
+        Room hallway = new Room("Hallway", new BigDecimal("12.00"), list(hallwaySecurity));
 
-        Room kitchen = new Room("Kitchen", new BigDecimal("20.00"), new DeviceGroup[]{kitchenGroup});
+        Room kitchen = new Room("Kitchen", new BigDecimal("20.00"), list(kitchenGroup));
 
-        Room office = new Room("Office", new BigDecimal("18.00"), new DeviceGroup[]{officeNetwork});
+        Room office = new Room("Office", new BigDecimal("18.00"), list(officeNetwork));
 
         // --- Floors ---
-        Floor groundFloor = new Floor(1, "Ground Floor", new Room[]{livingRoom, hallway, kitchen});
-        Floor firstFloor = new Floor(2, "First Floor", new Room[]{office});
+        Floor groundFloor = new Floor(1, "Ground Floor", list(livingRoom, hallway, kitchen));
+        Floor firstFloor = new Floor(2, "First Floor", list(office));
 
         // --- SmartHome ---
-        SmartHome myHome = new SmartHome("My Smart Home", LocalDate.of(2023, 6, 1), owner, neighbourhood, networkProvider, securityCompany, solarPanel, sewerageSystem, garage, garden, homeGym, new Floor[]{groundFloor, firstFloor});
+        SmartHome myHome = new SmartHome("My Smart Home", LocalDate.of(2023, 6, 1), owner, neighbourhood, networkProvider, securityCompany, solarPanel, sewerageSystem, garage, garden, homeGym, list(groundFloor, firstFloor));
 
         // --- Street & District ---
-        Street mainStreet = new Street("123 Main Street", "62701", new SmartHome[]{myHome});
-        District district = new District("Westside", "Springfield", "USA", new Street[]{mainStreet});
+        Street mainStreet = new Street("123 Main Street", "62701", list(myHome));
+        District district = new District("Westside", "Springfield", "USA", list(mainStreet));
 
         // --- Output ---
-        System.out.println(district.districtInfo());
+        System.out.println(district.listAllDevices());
         System.out.println(mainStreet.streetInfo());
         System.out.println(myHome.listAllDevices());
 
@@ -160,7 +171,7 @@ public class Main {
         }
 
         SmartRouter router1 = new SmartRouter();
-        router1.startRouter();
+        router1.isConnectedToWifi();
 
         livingRoomThermostat.setTemperatureSetting(-50);
 

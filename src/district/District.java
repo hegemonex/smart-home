@@ -1,17 +1,27 @@
 package district;
 
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 public class District {
 
     private String districtName;
     private String city;
     private String country;
-    private Street[] streets;
+    private Map<String, Street> streetMap;
 
-    public District(String districtName, String city, String country, Street[] streets) {
+    public District(String districtName, String city, String country, List<Street> streets) {
         this.districtName = districtName;
         this.city = city;
         this.country = country;
-        this.streets = streets;
+
+        this.streetMap = new LinkedHashMap<>();
+        if (streets != null) {
+            for (Street s : streets) {
+                streetMap.put(s.getStreetName(), s);
+            }
+        }
     }
 
     public String getDistrictName() {
@@ -38,16 +48,54 @@ public class District {
         this.country = country;
     }
 
-    public Street[] getStreets() {
-        return streets;
+    public void addStreet(Street street) {
+        if (street != null) {
+            streetMap.put(street.getStreetName(), street);
+        }
     }
 
-    public void setStreets(Street[] streets) {
-        this.streets = streets;
+    public Street removeStreet(String streetName) {
+        return streetMap.remove(streetName);
     }
 
-    public String districtInfo() {
-        return "District: " + districtName + " | City: " + city + " | Country: " + country
-                + " | Streets: " + (streets != null ? streets.length : 0);
+    public Street getStreet(String streetName) {
+        return streetMap.get(streetName);
+    }
+
+    public boolean isEmpty() {
+        return streetMap.isEmpty();
+    }
+
+    public int size() {
+        return streetMap.size();
+    }
+
+    public Street getFirstStreet() {
+        return streetMap.isEmpty() ? null : streetMap.values().iterator().next();
+    }
+
+    public String listAllDevices() {
+        if (streetMap.isEmpty()) {
+            return districtName + " (" + city + ", " + country + "): no streets";
+        }
+
+        StringBuilder result = new StringBuilder();
+
+        result.append("District: ")
+                .append(districtName)
+                .append(" (")
+                .append(city)
+                .append(", ")
+                .append(country)
+                .append(")\n");
+
+        for (Map.Entry<String, Street> entry : streetMap.entrySet()) {
+            result.append(entry.getKey())
+                    .append(" → ")
+                    .append(entry.getValue().streetInfo())
+                    .append("\n");
+        }
+
+        return result.toString();
     }
 }
