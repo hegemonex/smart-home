@@ -18,8 +18,8 @@ public class District {
 
         this.streetMap = new LinkedHashMap<>();
         if (streets != null) {
-            for (Street s : streets) {
-                streetMap.put(s.getStreetName(), s);
+            for (Street street : streets) {
+                streetMap.put(street.getStreetName(), street);
             }
         }
     }
