@@ -5,20 +5,8 @@ import java.util.NoSuchElementException;
 
 public class LinkedList<T> implements Iterable<T> {
 
-    private static class Node<T> {
-
-        private T data;
-        private Node<T> next;
-
-        Node(T data) {
-            this.data = data;
-            this.next = null;
-        }
-    }
-
     private Node<T> head;
     private int size;
-
     public LinkedList() {
         head = null;
         size = 0;
@@ -192,5 +180,16 @@ public class LinkedList<T> implements Iterable<T> {
         }
         sb.append("]");
         return sb.toString();
+    }
+
+    private static class Node<T> {
+
+        private final T data;
+        private Node<T> next;
+
+        Node(T data) {
+            this.data = data;
+            this.next = null;
+        }
     }
 }

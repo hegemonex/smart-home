@@ -9,7 +9,7 @@ public class District {
     private String districtName;
     private String city;
     private String country;
-    private Map<String, Street> streetMap;
+    private final Map<String, Street> streetMap;
 
     public District(String districtName, String city, String country, List<Street> streets) {
         this.districtName = districtName;

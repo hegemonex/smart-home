@@ -10,7 +10,7 @@ public class Room {
 
     protected String name;
     protected BigDecimal area;
-    private List<DeviceGroup> deviceGroups;
+    private final List<DeviceGroup> deviceGroups;
 
     public Room(String name, BigDecimal area, List<DeviceGroup> deviceGroups) {
         this.name = name;

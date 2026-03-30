@@ -9,7 +9,7 @@ public class DeviceGroup {
 
     private String groupName;
     private String category;
-    private List<DeviceZone> zones;
+    private final List<DeviceZone> zones;
 
     public DeviceGroup(String groupName, String category, List<DeviceZone> zones) {
         this.zones = zones != null ? new ArrayList<>(zones) : new ArrayList<>();

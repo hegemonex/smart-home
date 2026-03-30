@@ -18,25 +18,25 @@ import java.util.Set;
 
 public class SmartHome {
 
-    private static int totalHomes = 0;
     private static final String SYSTEM_VERSION = "2.0";
+    private static int totalHomes = 0;
 
     static {
         System.out.println("SmartHome system initialized. Version: " + SYSTEM_VERSION);
     }
 
-    private String name;
-    private LocalDate builtDate;
-    private Neighbourhood neighbourhood;
-    private NetworkProvider networkProvider;
-    private SecurityCompany securityCompany;
-    private SolarPanel solarPanel;
-    private SewerageSystem sewerageSystem;
-    private Garage garage;
-    private Garden garden;
-    private HomeGym homeGym;
-    private Set<Owner> owners;
-    private List<Floor> floors;
+    private final String name;
+    private final LocalDate builtDate;
+    private final Neighbourhood neighbourhood;
+    private final NetworkProvider networkProvider;
+    private final SecurityCompany securityCompany;
+    private final SolarPanel solarPanel;
+    private final SewerageSystem sewerageSystem;
+    private final Garage garage;
+    private final Garden garden;
+    private final HomeGym homeGym;
+    private final Set<Owner> owners;
+    private final List<Floor> floors;
 
     public SmartHome(String name, LocalDate builtDate, Owner primaryOwner,
                      Neighbourhood neighbourhood, NetworkProvider networkProvider,

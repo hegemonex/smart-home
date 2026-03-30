@@ -10,9 +10,17 @@ public abstract class Device {
 
     protected static int deviceCount = 0;
 
+    static {
+        System.out.println("Device class loaded. Smart Home system starting...");
+    }
+
     protected String name;
     protected BigDecimal price;
     protected LocalDate installedDate;
+
+    {
+        System.out.println("A device object is being created.");
+    }
 
     public Device(String name, BigDecimal price, LocalDate installedDate) {
         this.name = name;
@@ -21,42 +29,35 @@ public abstract class Device {
         deviceCount++;
     }
 
-    public Device(){}
-
-    static {
-        System.out.println("Device class loaded. Smart Home system starting...");
-    }
-
-    {
-        System.out.println("A device object is being created.");
-    }
-
-    public final void printDeviceName() {
-        System.out.println(name);
+    public Device() {
     }
 
     public static int getDeviceCount() {
         return deviceCount;
     }
 
+    public final void printDeviceName() {
+        System.out.println(name);
+    }
+
     public String getName() {
         return name;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public LocalDate getInstalledDate() {
-        return installedDate;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public BigDecimal getPrice() {
+        return price;
+    }
+
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public LocalDate getInstalledDate() {
+        return installedDate;
     }
 
     public void setInstalledDate(LocalDate installedDate) throws DeviceInstallationException {
@@ -88,8 +89,7 @@ public abstract class Device {
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (!(obj instanceof Device)) return false;
-        Device other = (Device) obj;
+        if (!(obj instanceof Device other)) return false;
         return Objects.equals(name, other.name) && Objects.equals(price, other.price) && Objects.equals(installedDate, other.installedDate);
     }
 }

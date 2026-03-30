@@ -30,6 +30,12 @@ public class SmartAirConditioner extends ClimateDevice implements TemperatureCon
         return temperature;
     }
 
+    @Override
+    public void setTemperature(double temperature) {
+        this.temperature = temperature;
+        System.out.println(name + " temperature set to " + temperature);
+    }
+
     public int getFanSpeed() {
         return fanSpeed;
     }
@@ -59,11 +65,5 @@ public class SmartAirConditioner extends ClimateDevice implements TemperatureCon
     @Override
     public void operate() {
         System.out.println(name + " is balancing the temperature.");
-    }
-
-    @Override
-    public void setTemperature(double temperature) {
-        this.temperature = temperature;
-        System.out.println(name + " temperature set to " + temperature);
     }
 }

@@ -9,7 +9,7 @@ public class Street {
 
     private String streetName;
     private String postalCode;
-    private List<SmartHome> homes;
+    private final List<SmartHome> homes;
 
     public Street(String streetName, String postalCode, List<SmartHome> homes) {
         this.homes = homes != null ? new ArrayList<>(homes) : new ArrayList<>();

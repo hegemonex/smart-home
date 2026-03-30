@@ -13,12 +13,18 @@ import district.house.devices.sensors.MotionSensor;
 import district.house.devices.sensors.SecurityCamera;
 import district.house.devices.smartdevices.*;
 import district.house.rooms.*;
+import enums.*;
 import exceptions.DeviceInstallationException;
+import lambdas.CustomFunctionalInterfaces;
+import lambdas.DeviceService;
+import records.DeviceRecord;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.*;
 
 public class Main {
 
@@ -175,11 +181,289 @@ public class Main {
 
         livingRoomThermostat.setTemperatureSetting(-50);
 
-    }
+        System.out.println("\n── ENUM 1: DeviceStatus ──");
 
+        DeviceStatus routerStatus = DeviceStatus.ONLINE;
+        System.out.println("Router status : " + routerStatus);
+        System.out.println("Is operational: " + routerStatus.isOperational());
+        System.out.println("Status code   : " + routerStatus.getStatusCode());
+
+        DeviceStatus looked = DeviceStatus.fromCode(4);
+        System.out.println("Status for code 4: " + (looked != null ? looked.getDescription() : "unknown"));
+
+        DeviceStatus cameraStatus = DeviceStatus.ERROR;
+        if (!cameraStatus.isOperational()) {
+            System.out.println("Front Door Camera needs attention — status: " + cameraStatus);
+        }
+
+
+        System.out.println("\n── ENUM 2: RoomType ──");
+
+        for (RoomType type : RoomType.values()) {
+            System.out.println(type.name() + ": " + type.describeFunction());
+            System.out.println("  Capacity warning (15 devices): " + type.capacityWarning(15));
+        }
+
+        System.out.println("Room types on floor 1:");
+        for (RoomType rt : RoomType.forFloor(1)) {
+            System.out.println("  " + rt.name());
+        }
+
+
+        System.out.println("\n── ENUM 3: EnergyRating ──");
+
+        EnergyRating tvRating = EnergyRating.recommend(290);
+        System.out.println("TV energy rating      : " + tvRating.getLabel());
+        System.out.println("Annual cost at $0.28  : $" + tvRating.annualCost(new BigDecimal("0.28")));
+        System.out.println("Subsidy eligible      : " + tvRating.isSubsidyEligible());
+        System.out.println("Annual saving vs D    : $" + tvRating.getAnnualSavingVsBaseline());
+
+
+        System.out.println("\n── ENUM 4: AlertLevel ──");
+
+        AlertLevel current = AlertLevel.WARNING;
+        System.out.println("Current alert level  : " + current);
+        AlertLevel escalated = current.escalate();
+        System.out.println("After escalation     : " + escalated);
+        System.out.println("Dispatch message     : " + escalated.dispatchMessage("Front Door Camera"));
+        System.out.println("Immediate action req : " + escalated.requiresImmediateAction());
+
+
+        System.out.println("\n── ENUM 5: ConnectionProtocol ──");
+
+        ConnectionProtocol routerProtocol = ConnectionProtocol.WIFI_5;
+        System.out.println("Router protocol   : " + routerProtocol);
+        System.out.println("Handshake         : " + routerProtocol.connect("Office Router"));
+        System.out.println("Long range?       : " + routerProtocol.isLongRange());
+        System.out.println("Fastest protocol  : " + ConnectionProtocol.fastest());
+
+        for (ConnectionProtocol p : ConnectionProtocol.values()) {
+            System.out.println("  " + p.name() + " long-range=" + p.isLongRange());
+        }
+
+        System.out.println("\n── RECORD: DeviceRecord ──");
+
+        DeviceRecord tvSnapshot = new DeviceRecord(
+                "Living Room TV",
+                "SmartTV",
+                new BigDecimal("799.99"),
+                LocalDate.of(2023, 11, 20),
+                DeviceStatus.ONLINE,
+                EnergyRating.recommend(350),
+                ConnectionProtocol.WIFI_5,
+                AlertLevel.INFO,
+                LocalDateTime.now()
+        );
+
+        System.out.println("Record summary  : " + tvSnapshot.summary());
+        System.out.println("Needs attention?: " + tvSnapshot.needsAttention());
+
+        System.out.println("Device name     : " + tvSnapshot.deviceName());
+        System.out.println("Energy rating   : " + tvSnapshot.energyRating().getLabel());
+        System.out.println("Protocol        : " + tvSnapshot.protocol().name());
+
+        DeviceRecord tvOffline = tvSnapshot.withStatus(DeviceStatus.OFFLINE);
+        System.out.println("After going offline: " + tvOffline.summary());
+
+        DeviceRecord cameraSnap = DeviceRecord.quickSnapshot(
+                "Front Door Camera", "SecurityCamera",
+                new BigDecimal("149.99"), LocalDate.of(2024, 2, 1));
+        System.out.println("Camera snapshot : " + cameraSnap.summary());
+
+        DeviceRecord alerted = cameraSnap.withEscalatedAlert();
+        System.out.println("After escalation: " + alerted.summary());
+
+        System.out.println("Full toString   : " + tvSnapshot);
+
+        System.out.println("   LAMBDAS — java.util.function standard interfaces   ");
+
+        DeviceService service = new DeviceService();
+
+        Device[] allDevices = {
+                ceilingLight, floorLamp, livingRoomTV, livingRoomSpeaker,
+                livingRoomThermostat, livingRoomAC, hallwaySensor,
+                mainDoorLock, frontDoorCamera, coffeeMachinePlug, officeRouter
+        };
+
+        System.out.println("\n[Runnable] Scheduling a health check:");
+
+        Runnable healthCheck = () -> {
+            System.out.println("  → Pinging all " + allDevices.length + " devices...");
+            System.out.println("  → All devices responded within 50 ms.");
+        };
+        service.scheduleHealthCheck(healthCheck);
+
+        service.scheduleHealthCheck(() -> System.out.println("  → Quick heartbeat ping OK."));
+
+        System.out.println("\n[Supplier<String>] Generating a dynamic system message:");
+
+        Supplier<String> morningGreeting = () ->
+                "Good morning, " + owner.getName() + "! System ready. "
+                        + "You have " + allDevices.length + " devices registered.";
+
+        service.generateSystemMessage(morningGreeting);
+
+        System.out.println("\n[Consumer<Device>] Printing device info for all devices:");
+
+        Consumer<Device> infoPrinter = device ->
+                System.out.println("  • " + device.deviceInfo());
+
+        service.processAllDevices(allDevices, infoPrinter);
+
+        System.out.println("\n[Function<Device,String>] Formatting a device for a log file:");
+
+        Function<Device, String> logFormatter = device ->
+                "[LOG " + LocalDate.now() + "] Device='" + device.getName()
+                        + "' Price=$" + device.getPrice()
+                        + " Installed=" + device.getInstalledDate();
+
+        System.out.println("  " + service.formatDevice(livingRoomTV, logFormatter));
+
+        Function<Device, String> labelFormatter = device ->
+                "📺 " + device.getName() + " ($" + device.getPrice() + ")";
+
+        System.out.println("  " + service.formatDevice(livingRoomTV, labelFormatter));
+
+        System.out.println("\n[Predicate<Device>] Filtering expensive devices (> $100):");
+
+        Predicate<Device> expensiveFilter = device ->
+                device.getPrice().compareTo(new BigDecimal("100")) > 0;
+
+        Device[] expensiveDevices = service.filterDevices(allDevices, expensiveFilter);
+        System.out.println("  Devices over $100:");
+        for (Device d : expensiveDevices) {
+            System.out.println("    - " + d.getName() + " ($" + d.getPrice() + ")");
+        }
+
+        Predicate<Device> recentFilter = device ->
+                device.getInstalledDate() != null
+                        && device.getInstalledDate().isAfter(LocalDate.of(2024, 1, 1));
+
+        Predicate<Device> expensiveAndRecent = expensiveFilter.and(recentFilter);
+        Device[] premium = service.filterDevices(allDevices, expensiveAndRecent);
+        System.out.println("  Expensive AND installed after 2024-01-01:");
+        for (Device d : premium) {
+            System.out.println("    - " + d.getName());
+        }
+
+        System.out.println("\n[BiFunction<Device,BigDecimal,String>] Cost analysis:");
+
+        BiFunction<Device, BigDecimal, String> costAnalyser = (device, rate) -> {
+            double roughKwh = device.getPrice().doubleValue() * 0.05;
+            BigDecimal annualCost = rate.multiply(new BigDecimal(roughKwh * 365));
+            return device.getName() + " — estimated annual cost: $"
+                    + annualCost.setScale(2, java.math.RoundingMode.HALF_UP);
+        };
+
+        System.out.println("  " + service.analyseDeviceCost(livingRoomTV, new BigDecimal("0.28"), costAnalyser));
+        System.out.println("  " + service.analyseDeviceCost(livingRoomAC, new BigDecimal("0.28"), costAnalyser));
+        System.out.println("  " + service.analyseDeviceCost(officeRouter, new BigDecimal("0.28"), costAnalyser));
+
+        System.out.println("\n[BiConsumer<Device,AlertLevel>] Triggering a security alert:");
+
+        BiConsumer<Device, AlertLevel> alertLogger = (device, level) ->
+                System.out.println("  ⚠ ALERT [" + level.name() + "] on '"
+                        + device.getName() + "': " + level.dispatchMessage(device.getName()));
+
+        service.triggerAlert(frontDoorCamera, AlertLevel.CRITICAL, alertLogger);
+        service.triggerAlert(hallwaySensor, AlertLevel.WARNING, alertLogger);
+
+        System.out.println("        CUSTOM FUNCTIONAL INTERFACES (3 types)        ");
+
+
+        System.out.println("\n[DeviceFilter] Filter devices with domain-named interface:");
+
+        CustomFunctionalInterfaces.DeviceFilter cheapFilter = device -> device.getPrice().doubleValue() <= 50;
+        CustomFunctionalInterfaces.DeviceFilter wifiFilter = device -> device instanceof SmartDevice
+                && ((SmartDevice) device).isConnectedToWifi();
+
+        CustomFunctionalInterfaces.DeviceFilter cheapAndWifi = cheapFilter.and(wifiFilter);
+
+        System.out.println("  Cheap devices (≤ $50):");
+        for (Device d : service.applyFilter(allDevices, cheapFilter)) {
+            System.out.println("    - " + d.getName() + " ($" + d.getPrice() + ")");
+        }
+
+        System.out.println("  Cheap AND connected to Wi-Fi:");
+        for (Device d : service.applyFilter(allDevices, cheapAndWifi)) {
+            System.out.println("    - " + d.getName());
+        }
+
+
+        System.out.println("\n[DeviceAction] Run a named action on all devices:");
+
+        CustomFunctionalInterfaces.DeviceAction logAction = device -> "Logging: " + device.deviceInfo();
+        CustomFunctionalInterfaces.DeviceAction operateAction = device -> {
+            device.operate();
+            return device.getName() + " operated successfully.";
+        };
+
+        CustomFunctionalInterfaces.DeviceAction logThenOperate = logAction.andThen(operateAction);
+
+        Device[] smallSet = {ceilingLight, livingRoomTV, officeRouter};
+        System.out.println("  Running logThenOperate on small set:");
+        service.runActionOnAll(smallSet, logThenOperate);
+
+        System.out.println("\n[AlertHandler] Composed alert handling pipeline:");
+
+        CustomFunctionalInterfaces.AlertHandler logHandler = (name, level) ->
+                System.out.println("  [LOG]  " + level.name() + " on device: " + name);
+
+        CustomFunctionalInterfaces.AlertHandler pushHandler = (name, level) ->
+                System.out.println("  [PUSH] Sending push notification: "
+                        + level.dispatchMessage(name));
+
+        CustomFunctionalInterfaces.AlertHandler smsHandler = (name, level) -> {
+            if (level.getSeverity() >= AlertLevel.CRITICAL.getSeverity()) {
+                System.out.println("  [SMS]  Texting owner: URGENT — " + name + " is " + level.name());
+            }
+        };
+
+        CustomFunctionalInterfaces.AlertHandler fullPipeline = logHandler.andAlso(pushHandler).andAlso(smsHandler);
+
+        service.dispatchAlert("Front Door Camera", AlertLevel.CRITICAL, fullPipeline);
+        service.dispatchAlert("Hallway Sensor", AlertLevel.WARNING, fullPipeline);
+
+        System.out.println("   INLINE LAMBDA DEMOS — all 7 interface types        ");
+
+        Runnable rebootTask = () -> System.out.println("[Runnable] Rebooting all devices on Ground Floor...");
+        rebootTask.run();
+
+        Supplier<Integer> deviceCounter = () -> Device.getDeviceCount();
+        System.out.println("[Supplier<Integer>] Total devices created so far: " + deviceCounter.get());
+
+        Consumer<String> announcer = msg -> System.out.println("[Consumer<String>] Announcement: " + msg);
+        announcer.accept("All systems nominal. Have a great day, " + owner.getName() + "!");
+
+        Function<String, Integer> nameLength = name -> name.length();
+        System.out.println("[Function<String,Integer>] Name length of 'Ceiling Light': "
+                + nameLength.apply(ceilingLight.getName()));
+
+        Predicate<String> shortName = name -> name.length() <= 12;
+        System.out.println("[Predicate<String>] 'Ceiling Light' is short label: "
+                + shortName.test(ceilingLight.getName()));
+        System.out.println("[Predicate<String>] 'TV' is short label: " + shortName.test("TV"));
+
+        BiFunction<String, Integer, String> statusLine = (name, brightness) ->
+                "Device '" + name + "' brightness=" + brightness + "%";
+        System.out.println("[BiFunction<String,Integer,String>] "
+                + statusLine.apply("Ceiling Light", 75));
+
+        BiConsumer<String, DeviceStatus> statusLogger = (name, status) ->
+                System.out.println("[BiConsumer<String,DeviceStatus>] "
+                        + name + " changed status → " + status);
+        statusLogger.accept("Front Door Camera", DeviceStatus.MAINTENANCE);
+
+        System.out.println("\n[Done] All homework 2 features demonstrated successfully.");
+    }
 
     public static void connectDevice(Connectable device) {
 
         device.connect();
     }
 }
+
+
+
+
+

@@ -7,7 +7,7 @@ public class DeviceZone {
 
     private String zoneName;
     private String location;
-    private Map<Device, String> devicePlacementMap;
+    private final Map<Device, String> devicePlacementMap;
 
     public DeviceZone(String zoneName, String location) {
         this.zoneName = zoneName;

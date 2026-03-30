@@ -17,14 +17,14 @@ public abstract class Sensor extends Device {
         this.sensorType = sensorType;
     }
 
+    public Sensor() {
+    }
+
     public void setSensorType(String sensorType) {
         if (sensorType == null) {
             throw new SecurityAlertException("Sensor type cannot be null");
         }
         this.sensorType = sensorType;
-    }
-
-    public Sensor() {
     }
 
     public double getSensorValue() {

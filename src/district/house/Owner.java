@@ -56,8 +56,7 @@ public class Owner {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Owner)) return false;
-        Owner owner = (Owner) o;
+        if (!(o instanceof Owner owner)) return false;
         return Objects.equals(email, owner.email); // or unique identifier
     }
 

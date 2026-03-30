@@ -7,7 +7,7 @@ public class Floor {
 
     private int floorNumber;
     private String label;
-    private List<Room> rooms;
+    private final List<Room> rooms;
 
     public Floor(int floorNumber, String label, List<Room> rooms) {
         this.rooms = rooms != null ? new ArrayList<>(rooms) : new ArrayList<>();
