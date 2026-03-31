@@ -2,9 +2,6 @@ package lambdas;
 
 import district.house.devices.Device;
 import enums.AlertLevel;
-import lambdas.CustomFunctionalInterfaces.AlertHandler;
-import lambdas.CustomFunctionalInterfaces.DeviceAction;
-import lambdas.CustomFunctionalInterfaces.DeviceFilter;
 
 import java.math.BigDecimal;
 import java.util.function.*;

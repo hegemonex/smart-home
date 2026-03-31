@@ -15,7 +15,9 @@ import district.house.devices.smartdevices.*;
 import district.house.rooms.*;
 import enums.*;
 import exceptions.DeviceInstallationException;
-import lambdas.CustomFunctionalInterfaces;
+import lambdas.AlertHandler;
+import lambdas.DeviceAction;
+import lambdas.DeviceFilter;
 import lambdas.DeviceService;
 import records.DeviceRecord;
 
@@ -373,11 +375,11 @@ public class Main {
 
         System.out.println("\n[DeviceFilter] Filter devices with domain-named interface:");
 
-        CustomFunctionalInterfaces.DeviceFilter cheapFilter = device -> device.getPrice().doubleValue() <= 50;
-        CustomFunctionalInterfaces.DeviceFilter wifiFilter = device -> device instanceof SmartDevice
+        DeviceFilter cheapFilter = device -> device.getPrice().doubleValue() <= 50;
+        DeviceFilter wifiFilter = device -> device instanceof SmartDevice
                 && ((SmartDevice) device).isConnectedToWifi();
 
-        CustomFunctionalInterfaces.DeviceFilter cheapAndWifi = cheapFilter.and(wifiFilter);
+        DeviceFilter cheapAndWifi = cheapFilter.and(wifiFilter);
 
         System.out.println("  Cheap devices (≤ $50):");
         for (Device d : service.applyFilter(allDevices, cheapFilter)) {
@@ -392,13 +394,13 @@ public class Main {
 
         System.out.println("\n[DeviceAction] Run a named action on all devices:");
 
-        CustomFunctionalInterfaces.DeviceAction logAction = device -> "Logging: " + device.deviceInfo();
-        CustomFunctionalInterfaces.DeviceAction operateAction = device -> {
+        DeviceAction logAction = device -> "Logging: " + device.deviceInfo();
+        DeviceAction operateAction = device -> {
             device.operate();
             return device.getName() + " operated successfully.";
         };
 
-        CustomFunctionalInterfaces.DeviceAction logThenOperate = logAction.andThen(operateAction);
+        DeviceAction logThenOperate = logAction.andThen(operateAction);
 
         Device[] smallSet = {ceilingLight, livingRoomTV, officeRouter};
         System.out.println("  Running logThenOperate on small set:");
@@ -406,20 +408,20 @@ public class Main {
 
         System.out.println("\n[AlertHandler] Composed alert handling pipeline:");
 
-        CustomFunctionalInterfaces.AlertHandler logHandler = (name, level) ->
+        AlertHandler logHandler = (name, level) ->
                 System.out.println("  [LOG]  " + level.name() + " on device: " + name);
 
-        CustomFunctionalInterfaces.AlertHandler pushHandler = (name, level) ->
+        AlertHandler pushHandler = (name, level) ->
                 System.out.println("  [PUSH] Sending push notification: "
                         + level.dispatchMessage(name));
 
-        CustomFunctionalInterfaces.AlertHandler smsHandler = (name, level) -> {
+        AlertHandler smsHandler = (name, level) -> {
             if (level.getSeverity() >= AlertLevel.CRITICAL.getSeverity()) {
                 System.out.println("  [SMS]  Texting owner: URGENT — " + name + " is " + level.name());
             }
         };
 
-        CustomFunctionalInterfaces.AlertHandler fullPipeline = logHandler.andAlso(pushHandler).andAlso(smsHandler);
+        AlertHandler fullPipeline = logHandler.andAlso(pushHandler).andAlso(smsHandler);
 
         service.dispatchAlert("Front Door Camera", AlertLevel.CRITICAL, fullPipeline);
         service.dispatchAlert("Hallway Sensor", AlertLevel.WARNING, fullPipeline);
