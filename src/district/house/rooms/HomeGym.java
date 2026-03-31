@@ -3,12 +3,13 @@ package district.house.rooms;
 import district.house.devices.DeviceGroup;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class HomeGym extends Room {
 
     private int equipmentCount;
 
-    public HomeGym(String name, BigDecimal area, DeviceGroup[] groups, int equipmentCount) {
+    public HomeGym(String name, BigDecimal area, List<DeviceGroup> groups, int equipmentCount) {
         super(name, area, groups);
         this.equipmentCount = equipmentCount;
     }

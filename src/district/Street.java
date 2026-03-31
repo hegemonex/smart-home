@@ -2,16 +2,17 @@ package district;
 
 import district.house.SmartHome;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Street {
 
     private String streetName;
     private String postalCode;
-    private SmartHome[] homes;
+    private final List<SmartHome> homes;
 
-    public Street(String streetName, String postalCode, SmartHome[] homes) {
-        this.streetName = streetName;
-        this.postalCode = postalCode;
-        this.homes = homes;
+    public Street(String streetName, String postalCode, List<SmartHome> homes) {
+        this.homes = homes != null ? new ArrayList<>(homes) : new ArrayList<>();
     }
 
     public String getStreetName() {
@@ -30,15 +31,27 @@ public class Street {
         this.postalCode = postalCode;
     }
 
-    public SmartHome[] getHomes() {
-        return homes;
+    public void addHome(SmartHome home) {
+        homes.add(home);
     }
 
-    public void setHomes(SmartHome[] homes) {
-        this.homes = homes;
+    public boolean removeHome(SmartHome h) {
+        return homes.remove(h);
+    }
+
+    public boolean isEmpty() {
+        return homes.isEmpty();
+    }
+
+    public int size() {
+        return homes.size();
+    }
+
+    public SmartHome getFirstHome() {
+        return homes.isEmpty() ? null : homes.get(0);
     }
 
     public String streetInfo() {
-        return "Street: " + streetName + " | Postal Code: " + postalCode + " | Homes: " + (homes != null ? homes.length : 0);
+        return "Street: " + streetName + " | Postal Code: " + postalCode + " | Homes: " + (homes != null ? homes.size() : 0);
     }
 }

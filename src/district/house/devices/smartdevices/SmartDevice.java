@@ -8,18 +8,18 @@ import java.time.LocalDate;
 
 public abstract class SmartDevice extends Device {
 
-    protected boolean connectedToWifi =  false;
+    protected boolean connectedToWifi = false;
 
     public SmartDevice(String name, BigDecimal price, LocalDate installedDate, boolean connectedToWifi) {
         super(name, price, installedDate);
         this.connectedToWifi = connectedToWifi;
     }
 
-    public SmartDevice(){
+    public SmartDevice() {
         super();
     }
 
-    public boolean isConnectedToWifi(){
+    public boolean isConnectedToWifi() {
         if (!connectedToWifi) {
             throw new NetworkConnectionException("The device is not connected");
         }

@@ -1,6 +1,7 @@
 package district.house;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Owner {
 
@@ -50,5 +51,17 @@ public class Owner {
 
     public String ownerInfo() {
         return "Owner: " + name + " | Email: " + email + " | Member since: " + memberSince;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Owner owner)) return false;
+        return Objects.equals(email, owner.email); // or unique identifier
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email);
     }
 }

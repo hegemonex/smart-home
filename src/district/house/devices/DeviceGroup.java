@@ -2,16 +2,17 @@ package district.house.devices;
 
 import exceptions.DeviceNotFoundException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DeviceGroup {
 
     private String groupName;
     private String category;
-    private DeviceZone[] zones;
+    private final List<DeviceZone> zones;
 
-    public DeviceGroup(String groupName, String category, DeviceZone[] zones) {
-        this.groupName = groupName;
-        this.category = category;
-        this.zones = zones;
+    public DeviceGroup(String groupName, String category, List<DeviceZone> zones) {
+        this.zones = zones != null ? new ArrayList<>(zones) : new ArrayList<>();
     }
 
     public String getGroupName() {
@@ -33,22 +34,51 @@ public class DeviceGroup {
         this.category = category;
     }
 
-    public DeviceZone[] getZones() {
+    public List<DeviceZone> getZones() {
         return zones;
     }
 
-    public void setZones(DeviceZone[] zones) {
-        this.zones = zones;
+    public void addZone(DeviceZone zone) {
+        zones.add(zone);
+    }
+
+    public boolean removeZone(DeviceZone z) {
+        return zones.remove(z);
+    }
+
+    public boolean isEmpty() {
+        return zones.isEmpty();
+    }
+
+    public int size() {
+        return zones.size();
+    }
+
+    public DeviceZone get(int i) {
+        return zones.get(i);
+    }
+
+    public DeviceZone getFirstZone() {
+        return zones.isEmpty() ? null : zones.getFirst();
     }
 
     public String listZones() {
-        if (zones == null || zones.length == 0) {
+        if (zones == null || zones.isEmpty()) {
             return "      [" + category + "] " + groupName + ": no zones";
         }
-        String result = "      [" + category + "] " + groupName + ":\n";
+
+        StringBuilder result = new StringBuilder();
+        result.append("      [")
+                .append(category)
+                .append("] ")
+                .append(groupName)
+                .append(":\n");
+
         for (DeviceZone zone : zones) {
-            result += zone.listDevices() + "\n";
+            result.append(zone.listDevices())
+                    .append("\n");
         }
-        return result;
+
+        return result.toString();
     }
 }
