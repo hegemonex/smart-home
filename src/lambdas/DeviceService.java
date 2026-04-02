@@ -4,7 +4,11 @@ import district.house.devices.Device;
 import enums.AlertLevel;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.*;
+import java.util.stream.Collectors;
+
 
 public class DeviceService {
 
@@ -24,9 +28,9 @@ public class DeviceService {
     public void processAllDevices(Device[] devices, Consumer<Device> processor) {
         if (devices == null) return;
         System.out.println("[DeviceService] Processing " + devices.length + " device(s)...");
-        for (Device device : devices) {
-            processor.accept(device);
-        }
+
+        Arrays.stream(devices)
+                .forEach(processor::accept);
     }
 
     public String formatDevice(Device device, Function<Device, String> formatter) {
@@ -36,16 +40,9 @@ public class DeviceService {
     public Device[] filterDevices(Device[] devices, Predicate<Device> criterion) {
         if (devices == null) return new Device[0];
 
-        int count = 0;
-        for (Device d : devices) {
-            if (criterion.test(d)) count++;
-        }
-
-        Device[] result = new Device[count];
-        int i = 0;
-        for (Device d : devices) {
-            if (criterion.test(d)) result[i++] = d;
-        }
+        Device[] result = Arrays.stream(devices)
+                .filter(criterion::test)
+                .toArray(Device[]::new);
 
         System.out.println("[DeviceService] Filtered " + devices.length
                 + " → " + result.length + " device(s) passed.");
@@ -66,28 +63,56 @@ public class DeviceService {
     public Device[] applyFilter(Device[] devices, DeviceFilter filter) {
         if (devices == null) return new Device[0];
 
-        int count = 0;
-        for (Device d : devices) {
-            if (filter.test(d)) count++;
-        }
-        Device[] result = new Device[count];
-        int i = 0;
-        for (Device d : devices) {
-            if (filter.test(d)) result[i++] = d;
-        }
-        return result;
+        return Arrays.stream(devices)
+                .filter(filter::test)
+                .toArray(Device[]::new);
     }
 
     public void runActionOnAll(Device[] devices, DeviceAction action) {
         if (devices == null) return;
-        for (Device d : devices) {
-            String result = action.execute(d);
-            System.out.println("  Action result: " + result);
-        }
+
+        Arrays.stream(devices)
+                .map(action::execute)
+                .forEach(r -> System.out.println("  Action result: " + r));
     }
+
 
     public void dispatchAlert(String deviceName, AlertLevel level, AlertHandler handler) {
         System.out.println("[DeviceService] Dispatching alert → " + level.name());
         handler.handle(deviceName, level);
+    }
+
+    public BigDecimal totalCost(Device[] devices) {
+        if (devices == null) return BigDecimal.ZERO;
+
+        return Arrays.stream(devices)
+                .map(Device::getPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public List<Device> sortedByPrice(Device[] devices) {
+        if (devices == null) return List.of();
+
+        return Arrays.stream(devices)
+                .sorted((a, b) ->
+                        a.getPrice().compareTo(b.getPrice()))
+                .collect(Collectors.toList());
+    }
+
+    public long countExpensive(Device[] devices, BigDecimal threshold) {
+        if (devices == null) return 0;
+
+        return Arrays.stream(devices)
+                .filter(d -> d.getPrice().compareTo(threshold) > 0)
+                .count();
+    }
+
+    public String namesOfCheapDevices(Device[] devices, BigDecimal maxPrice) {
+        if (devices == null) return "";
+
+        return Arrays.stream(devices)
+                .filter(d -> d.getPrice().compareTo(maxPrice) <= 0)
+                .map(Device::getName)
+                .collect(Collectors.joining(", "));
     }
 }
