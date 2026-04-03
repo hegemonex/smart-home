@@ -102,7 +102,7 @@ public class SmartHome {
         }
 
         String ownersList = owners.stream()
-                .map(o -> "  - " + o.ownerInfo())
+                .map(owner -> "  - " + owner.ownerInfo())
                 .collect(Collectors.joining("\n"));
 
         String floorsList = floors.stream()

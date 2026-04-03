@@ -25,17 +25,45 @@ public class DeviceGroup {
         return groupName;
     }
 
-    public void setGroupName(String groupName) { this.groupName = groupName; }
-    public String getCategory() { return category; }
-    public void setCategory(String category) { this.category = category; }
-    public List<DeviceZone> getZones() { return zones; }
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
 
-    public void addZone(DeviceZone zone) { zones.add(zone); }
-    public boolean removeZone(DeviceZone z) { return zones.remove(z); }
-    public boolean isEmpty() { return zones.isEmpty(); }
-    public int size() { return zones.size(); }
-    public DeviceZone get(int i) { return zones.get(i); }
-    public DeviceZone getFirstZone() { return zones.isEmpty() ? null : zones.getFirst(); }
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public List<DeviceZone> getZones() {
+        return zones;
+    }
+
+    public void addZone(DeviceZone zone) {
+        zones.add(zone);
+    }
+
+    public boolean removeZone(DeviceZone z) {
+        return zones.remove(z);
+    }
+
+    public boolean isEmpty() {
+        return zones.isEmpty();
+    }
+
+    public int size() {
+        return zones.size();
+    }
+
+    public DeviceZone get(int i) {
+        return zones.get(i);
+    }
+
+    public DeviceZone getFirstZone() {
+        return zones.isEmpty() ? null : zones.getFirst();
+    }
 
     public String listZones() {
         if (zones.isEmpty()) {

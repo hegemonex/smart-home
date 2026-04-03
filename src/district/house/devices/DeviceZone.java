@@ -16,14 +16,33 @@ public class DeviceZone {
         this.devicePlacementMap = new HashMap<>();
     }
 
-    public String getZoneName() { return zoneName; }
-    public void setZoneName(String zoneName) { this.zoneName = zoneName; }
-    public String getLocation() { return location; }
-    public void setLocation(String location) { this.location = location; }
-    public Map<Device, String> getDevicePlacementMap() { return devicePlacementMap; }
+    public String getZoneName() {
+        return zoneName;
+    }
 
-    public void addDevice(Device device, String placement) { devicePlacementMap.put(device, placement); }
-    public void removeDevice(Device device) { devicePlacementMap.remove(device); }
+    public void setZoneName(String zoneName) {
+        this.zoneName = zoneName;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public Map<Device, String> getDevicePlacementMap() {
+        return devicePlacementMap;
+    }
+
+    public void addDevice(Device device, String placement) {
+        devicePlacementMap.put(device, placement);
+    }
+
+    public void removeDevice(Device device) {
+        devicePlacementMap.remove(device);
+    }
 
     public String listDevices() {
         if (devicePlacementMap.isEmpty()) {
