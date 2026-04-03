@@ -1,5 +1,8 @@
 package enums;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 public enum ConnectionProtocol {
 
     WIFI_24(2.4, 50, true, 300) {
@@ -72,36 +75,18 @@ public enum ConnectionProtocol {
     }
 
     public static ConnectionProtocol fastest() {
-        ConnectionProtocol best = values()[0];
-        for (ConnectionProtocol p : values()) {
-            if (p.typicalSpeedMbps > best.typicalSpeedMbps) {
-                best = p;
-            }
-        }
-        return best;
+        return Arrays.stream(values())
+                .max(Comparator.comparingDouble(p -> p.typicalSpeedMbps))
+                .orElse(ETHERNET);
     }
 
     public abstract String connect(String deviceName);
 
-    public boolean isLongRange() {
-        return maxRangeMeters > 25;
-    }
-
-    public double getFrequencyGHz() {
-        return frequencyGHz;
-    }
-
-    public int getMaxRangeMeters() {
-        return maxRangeMeters;
-    }
-
-    public boolean isEncrypted() {
-        return encrypted;
-    }
-
-    public double getTypicalSpeedMbps() {
-        return typicalSpeedMbps;
-    }
+    public boolean isLongRange() { return maxRangeMeters > 25; }
+    public double getFrequencyGHz() { return frequencyGHz; }
+    public int getMaxRangeMeters() { return maxRangeMeters; }
+    public boolean isEncrypted() { return encrypted; }
+    public double getTypicalSpeedMbps() { return typicalSpeedMbps; }
 
     @Override
     public String toString() {

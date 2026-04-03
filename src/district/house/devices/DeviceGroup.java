@@ -4,6 +4,7 @@ import exceptions.DeviceNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DeviceGroup {
 
@@ -12,6 +13,8 @@ public class DeviceGroup {
     private final List<DeviceZone> zones;
 
     public DeviceGroup(String groupName, String category, List<DeviceZone> zones) {
+        this.groupName = groupName;
+        this.category = category;
         this.zones = zones != null ? new ArrayList<>(zones) : new ArrayList<>();
     }
 
@@ -22,63 +25,27 @@ public class DeviceGroup {
         return groupName;
     }
 
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
-    }
+    public void setGroupName(String groupName) { this.groupName = groupName; }
+    public String getCategory() { return category; }
+    public void setCategory(String category) { this.category = category; }
+    public List<DeviceZone> getZones() { return zones; }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public List<DeviceZone> getZones() {
-        return zones;
-    }
-
-    public void addZone(DeviceZone zone) {
-        zones.add(zone);
-    }
-
-    public boolean removeZone(DeviceZone z) {
-        return zones.remove(z);
-    }
-
-    public boolean isEmpty() {
-        return zones.isEmpty();
-    }
-
-    public int size() {
-        return zones.size();
-    }
-
-    public DeviceZone get(int i) {
-        return zones.get(i);
-    }
-
-    public DeviceZone getFirstZone() {
-        return zones.isEmpty() ? null : zones.getFirst();
-    }
+    public void addZone(DeviceZone zone) { zones.add(zone); }
+    public boolean removeZone(DeviceZone z) { return zones.remove(z); }
+    public boolean isEmpty() { return zones.isEmpty(); }
+    public int size() { return zones.size(); }
+    public DeviceZone get(int i) { return zones.get(i); }
+    public DeviceZone getFirstZone() { return zones.isEmpty() ? null : zones.getFirst(); }
 
     public String listZones() {
-        if (zones == null || zones.isEmpty()) {
+        if (zones.isEmpty()) {
             return "      [" + category + "] " + groupName + ": no zones";
         }
 
-        StringBuilder result = new StringBuilder();
-        result.append("      [")
-                .append(category)
-                .append("] ")
-                .append(groupName)
-                .append(":\n");
+        String zoneList = zones.stream()
+                .map(DeviceZone::listDevices)
+                .collect(Collectors.joining("\n"));
 
-        for (DeviceZone zone : zones) {
-            result.append(zone.listDevices())
-                    .append("\n");
-        }
-
-        return result.toString();
+        return "      [" + category + "] " + groupName + ":\n" + zoneList + "\n";
     }
 }

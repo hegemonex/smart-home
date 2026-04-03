@@ -1,5 +1,7 @@
 package enums;
 
+import java.util.Arrays;
+
 public enum DeviceStatus {
 
     ONLINE(1, "Device is online and fully operational", true),
@@ -27,25 +29,15 @@ public enum DeviceStatus {
         this.isOperational = isOperational;
     }
 
-    public int getStatusCode() {
-        return statusCode;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public boolean isOperational() {
-        return isOperational;
-    }
+    public int getStatusCode() { return statusCode; }
+    public String getDescription() { return description; }
+    public boolean isOperational() { return isOperational; }
 
     public static DeviceStatus fromCode(int code) {
-        for (DeviceStatus status : values()) {
-            if (status.statusCode == code) {
-                return status;
-            }
-        }
-        return null;
+        return Arrays.stream(values())
+                .filter(s -> s.statusCode == code)
+                .findFirst()
+                .orElse(null);
     }
 
     @Override

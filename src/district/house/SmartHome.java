@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class SmartHome {
 
@@ -100,29 +101,17 @@ public class SmartHome {
             return name + " has no floors set up yet.";
         }
 
-        StringBuilder result = new StringBuilder();
+        String ownersList = owners.stream()
+                .map(o -> "  - " + o.ownerInfo())
+                .collect(Collectors.joining("\n"));
 
-        result.append("=== ")
-                .append(name)
-                .append(" (built: ")
-                .append(builtDate)
-                .append(") ===\n");
+        String floorsList = floors.stream()
+                .map(Floor::listRooms)
+                .collect(Collectors.joining("\n"));
 
-        result.append("Owners:\n");
-        for (Owner o : owners) {
-            result.append("  - ")
-                    .append(o.ownerInfo())
-                    .append("\n");
-        }
-
-        result.append("\nDevices:\n");
-
-        for (Floor floor : floors) {
-            result.append(floor.listRooms())
-                    .append("\n");
-        }
-
-        return result.toString();
+        return "=== " + name + " (built: " + builtDate + ") ===\n"
+                + "Owners:\n" + ownersList + "\n"
+                + "\nDevices:\n" + floorsList + "\n";
     }
 
     public Pair<String, String> getHomeOwnerSummary() {

@@ -1,6 +1,7 @@
 package enums;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 
 public enum EnergyRating {
 
@@ -16,8 +17,7 @@ public enum EnergyRating {
     G("G", 1200, new BigDecimal("-200.00"), "DARK_RED");
 
     static {
-        System.out.println("[EnergyRating] All " + EnergyRating.values().length
-                + " rating tiers registered.");
+        System.out.println("[EnergyRating] All " + EnergyRating.values().length + " rating tiers registered.");
     }
 
     private final String label;
@@ -26,8 +26,7 @@ public enum EnergyRating {
     private final String colour;
 
     {
-        System.out.println("[EnergyRating] Registering rating constant " +
-                "(instance init block)...");
+        System.out.println("[EnergyRating] Registering rating constant (instance init block)...");
     }
 
     EnergyRating(String label, int maxKwhPerYear, BigDecimal annualSavingVsBaseline, String colour) {
@@ -38,12 +37,10 @@ public enum EnergyRating {
     }
 
     public static EnergyRating recommend(int actualKwhPerYear) {
-        for (EnergyRating rating : values()) {
-            if (actualKwhPerYear <= rating.maxKwhPerYear) {
-                return rating;
-            }
-        }
-        return G;
+        return Arrays.stream(values())
+                .filter(r -> actualKwhPerYear <= r.maxKwhPerYear)
+                .findFirst()
+                .orElse(G);
     }
 
     public BigDecimal annualCost(BigDecimal pricePerKwh) {
@@ -54,21 +51,10 @@ public enum EnergyRating {
         return this.ordinal() <= A_PLUS.ordinal();
     }
 
-    public String getLabel() {
-        return label;
-    }
-
-    public int getMaxKwhPerYear() {
-        return maxKwhPerYear;
-    }
-
-    public BigDecimal getAnnualSavingVsBaseline() {
-        return annualSavingVsBaseline;
-    }
-
-    public String getcolour() {
-        return colour;
-    }
+    public String getLabel() { return label; }
+    public int getMaxKwhPerYear() { return maxKwhPerYear; }
+    public BigDecimal getAnnualSavingVsBaseline() { return annualSavingVsBaseline; }
+    public String getcolour() { return colour; }
 
     @Override
     public String toString() {

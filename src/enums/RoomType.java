@@ -1,5 +1,8 @@
 package enums;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public enum RoomType {
 
     LIVING_ROOM(20, false, 1) {
@@ -50,7 +53,6 @@ public enum RoomType {
         }
     };
 
-
     static {
         System.out.println("[RoomType] Enum loaded — " + RoomType.values().length + " room types available.");
     }
@@ -66,16 +68,9 @@ public enum RoomType {
     }
 
     public static RoomType[] forFloor(int level) {
-        int count = 0;
-        for (RoomType rt : values()) {
-            if (rt.floorLevel == level) count++;
-        }
-        RoomType[] result = new RoomType[count];
-        int i = 0;
-        for (RoomType rt : values()) {
-            if (rt.floorLevel == level) result[i++] = rt;
-        }
-        return result;
+        return Arrays.stream(values())
+                .filter(rt -> rt.floorLevel == level)
+                .toArray(RoomType[]::new);
     }
 
     public String capacityWarning(int installedCount) {
@@ -83,21 +78,12 @@ public enum RoomType {
             return "WARNING: " + name() + " has " + installedCount
                     + " devices but the recommended max is " + deviceAmount + ".";
         }
-        return name() + " device count (" + installedCount + ") " +
-                "is within safe limits.";
+        return name() + " device count (" + installedCount + ") is within safe limits.";
     }
 
-    public int getDeviceAmount() {
-        return deviceAmount;
-    }
-
-    public boolean getVentilation() {
-        return needsVentilation;
-    }
-
-    public int getFloorLevel() {
-        return floorLevel;
-    }
+    public int getDeviceAmount() { return deviceAmount; }
+    public boolean getVentilation() { return needsVentilation; }
+    public int getFloorLevel() { return floorLevel; }
 
     public abstract String describeFunction();
 }

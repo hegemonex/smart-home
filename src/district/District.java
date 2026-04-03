@@ -3,6 +3,7 @@ package district;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class District {
 
@@ -24,51 +25,21 @@ public class District {
         }
     }
 
-    public String getDistrictName() {
-        return districtName;
-    }
-
-    public void setDistrictName(String districtName) {
-        this.districtName = districtName;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
+    public String getDistrictName() { return districtName; }
+    public void setDistrictName(String districtName) { this.districtName = districtName; }
+    public String getCity() { return city; }
+    public void setCity(String city) { this.city = city; }
+    public String getCountry() { return country; }
+    public void setCountry(String country) { this.country = country; }
 
     public void addStreet(Street street) {
-        if (street != null) {
-            streetMap.put(street.getStreetName(), street);
-        }
+        if (street != null) streetMap.put(street.getStreetName(), street);
     }
 
-    public Street removeStreet(String streetName) {
-        return streetMap.remove(streetName);
-    }
-
-    public Street getStreet(String streetName) {
-        return streetMap.get(streetName);
-    }
-
-    public boolean isEmpty() {
-        return streetMap.isEmpty();
-    }
-
-    public int size() {
-        return streetMap.size();
-    }
+    public Street removeStreet(String streetName) { return streetMap.remove(streetName); }
+    public Street getStreet(String streetName) { return streetMap.get(streetName); }
+    public boolean isEmpty() { return streetMap.isEmpty(); }
+    public int size() { return streetMap.size(); }
 
     public Street getFirstStreet() {
         return streetMap.isEmpty() ? null : streetMap.values().iterator().next();
@@ -79,23 +50,10 @@ public class District {
             return districtName + " (" + city + ", " + country + "): no streets";
         }
 
-        StringBuilder result = new StringBuilder();
+        String streets = streetMap.entrySet().stream()
+                .map(e -> e.getKey() + " → " + e.getValue().streetInfo())
+                .collect(Collectors.joining("\n"));
 
-        result.append("District: ")
-                .append(districtName)
-                .append(" (")
-                .append(city)
-                .append(", ")
-                .append(country)
-                .append(")\n");
-
-        for (Map.Entry<String, Street> entry : streetMap.entrySet()) {
-            result.append(entry.getKey())
-                    .append(" → ")
-                    .append(entry.getValue().streetInfo())
-                    .append("\n");
-        }
-
-        return result.toString();
+        return "District: " + districtName + " (" + city + ", " + country + ")\n" + streets + "\n";
     }
 }
